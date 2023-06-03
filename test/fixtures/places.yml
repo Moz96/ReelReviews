@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyString
+  description: MyString
+  category: MyString
+  url: MyString
+  opening_hours: 2023-06-03 12:33:57
+
+two:
+  name: MyString
+  address: MyString
+  description: MyString
+  category: MyString
+  url: MyString
+  opening_hours: 2023-06-03 12:33:57
