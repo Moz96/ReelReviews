@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show]
   def index
     @posts = Post.all
   end
@@ -18,6 +19,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @comments = posts.comments
   end
 
   private

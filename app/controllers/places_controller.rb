@@ -1,4 +1,5 @@
 class PlacesController < ApplicationController
+  before_action :set_place, only: [:show]
   def index
     @places = Place.all
   end
@@ -18,6 +19,7 @@ class PlacesController < ApplicationController
   end
 
   def show
+    @posts = places.posts
   end
 
   private
