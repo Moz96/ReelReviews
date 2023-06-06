@@ -1,0 +1,7 @@
+<%= form_for @post, html: { multipart: true } do |f| %>
+  <div class="field">
+    <%= f.label :video %>
+    <%= f.file_field :video %>
+  </div>
+  <%= f.submit "Create Post" %>
+<% end %>
