@@ -1,14 +1,11 @@
 class CommentsController < ApplicationController
-  def index
-    @comments = Comment.all
-  end
-
   def new
     @comment = Comment.new
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save!
       redirect_to post_path
@@ -20,6 +17,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:post_id, :user_id, :text)
+    params.require(:comment).permit(:text)
   end
 end
