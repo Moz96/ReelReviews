@@ -1,0 +1,11 @@
+<%# render category list %>
+<%= @places.each do |place| %>
+  <% place.posts.each do |post| %>
+    <%= cl_video_tag(
+      post.reel.key,
+      :loop => true,
+      :controls => false,
+      :fallback_content => "Your browser does not support HTML5 video tags." )
+     %>
+  <% end %>
+<% end %>
