@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+place = Place.create(
+  name: "Test name",
+  address: "Test address",
+  description: "Test description",
+  category: "Test category",
+  url: "https://example.com",
+  opening_hours: "10am - 5pm"
+)
