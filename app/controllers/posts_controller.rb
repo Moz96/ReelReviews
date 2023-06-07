@@ -25,7 +25,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require.(:post).permit(:user_id, :place_id, :place_rating)
+    params.require.(:post).permit(:user_id, :place_id, :place_rating, :video)
   end
 
   def set_post

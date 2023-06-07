@@ -1,7 +1,18 @@
-<%= form_for @post, html: { multipart: true } do |f| %>
-  <div class="field">
+<%= form_with(model: @post, local: true) do |f| %>
+  <div class="form-inputs">
     <%= f.label :video %>
     <%= f.file_field :video %>
   </div>
+  <div class="form-inputs">
+    <%= f.label :place_rating %>
+    <%= f.number_field :place_rating %>
+  </div>
   <%= f.submit "Create Post" %>
 <% end %>
+
+<h2>Record your video</h2>
+<button id="start">Start</button>
+<button id="stop">Stop and save</button>
+<div>
+  <video style="border: 1px solid black" id="live" width="300" height="200" autoplay muted></video>
+</div>
