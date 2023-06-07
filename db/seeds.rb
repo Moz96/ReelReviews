@@ -14,3 +14,11 @@ place = Place.create(
   url: "https://example.com",
   opening_hours: "10am - 5pm"
 )
+
+post = Post.new(
+  user_id: 1,
+  place_id: place.id,
+  place_rating: 5
+)
+post.reels.attach(io: File.open('app/assets/videos/testreel.mp4'), filename: 'testreel.mp4', content_type: 'video/mp4')
+post.save
