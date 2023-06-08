@@ -1,18 +1,20 @@
-<%= form_with(model: @post, local: true) do |f| %>
-  <div class="form-inputs">
-    <%= f.label :video %>
-    <%= f.file_field :video %>
-  </div>
-  <div class="form-inputs">
-    <%= f.label :place_rating %>
-    <%= f.number_field :place_rating %>
-  </div>
-  <%= f.submit "Create Post" %>
-<% end %>
+<div data-controller="record-video">
+  <%= form_with(model: @post, local: true) do |f| %>
+    <div class="form-inputs">
+      <%= f.label :video %>
+      <%= f.file_field :video %>
+    </div>
+    <div class="form-inputs">
+      <%= f.label :place_rating %>
+      <%= f.number_field :place_rating %>
+    </div>
+    <%= f.submit "Create Post" %>
+  <% end %>
 
-<h2>Record your video</h2>
-<button id="start">Start</button>
-<button id="stop">Stop and save</button>
-<div>
-  <video style="border: 1px solid black" id="live" width="300" height="200" autoplay muted></video>
+  <h2>Record your video</h2>
+  <button data-action="click->record-video#start" data-target="record-video.startButton">Start</button>
+  <button data-action="click->record-video#stop" data-target="record-video.stopButton">Stop</button>
+  <div>
+    <video style="border: 1px solid black" id="live" data-record-video-target="live" width="300" height="200" autoplay muted></video>
+  </div>
 </div>
