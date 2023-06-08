@@ -20,10 +20,18 @@ place = Place.create(
   opening_hours: "10am - 5pm"
 )
 
-post = Post.new(
+post1 = Post.new(
   user_id: user.id,
   place_id: place.id,
   place_rating: 5
 )
-post.reel.attach(io: File.open('app/assets/videos/testreel.mp4'), filename: 'testreel.mp4', content_type: 'video/mp4')
-post.save
+post1.reel.attach(io: File.open('app/assets/videos/testreel1.mp4'), filename: 'testreel1.mp4', content_type: 'video/mp4')
+post1.save
+
+post2 = Post.new(
+  user_id: user.id,
+  place_id: place.id,
+  place_rating: 5
+)
+post2.reel.attach(io: File.open('app/assets/videos/testreel2.mp4'), filename: 'testreel1.mp4', content_type: 'video/mp4')
+post2.save
