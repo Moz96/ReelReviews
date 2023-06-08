@@ -1,0 +1,13 @@
+<%# <%= image_tag ("https://en.wikipedia.org/wiki/File:Dollarnote_siegel_hq.jpg",alt: "Placeholder Image") %> %>
+
+  <%# <%= link_to "Share", share_path, class: "overlay-link" %>
+  <%# <%= link_to "Like", like_path, class: "overlay-link" %>
+
+<h1><%= @place.name %></h1>
+<p>Category: <%= @place.category %></p>
+<p>Location: <%= @place.address %></p>
+<p>Description: <%= @place.description %></p>
+<p>Opening Times: <%= @place.opening_hours %></p>
+
+<div id="map-container">
+</div>
