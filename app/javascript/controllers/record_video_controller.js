@@ -63,6 +63,10 @@ export default class extends Controller {
       data: formData,
       success: () => {
         this.savePost();
+      },
+      error: (error) => {
+        console.error("Error uploading video:", error);
+        // Handle error response as needed
       }
     });
   }
