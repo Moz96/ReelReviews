@@ -41,12 +41,19 @@ ul {
   
   .favourite-icon {
     margin-left: 5px;
-    color: red;
+    
   }
   
   .reshare-icon {
     margin-top: 5px;
     text-align: right;
-    color: blue;
   }
+  
+  .favourite-icon i,
+  .reshare-icon i {
+    color: #888888;
+    background-color: transparent;
+    fill: none;
+  }
+  
   
