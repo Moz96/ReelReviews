@@ -13,12 +13,13 @@ export default class extends Controller {
       .then((stream) => {
         this.videoElementTarget.srcObject = stream;
         this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
+        console.log(this.videoElementTarget)
         return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
       })
       .then(() => this.startRecording(this.videoElementTarget.captureStream()))
       .then((recordedChunks) => {
         const recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
-        console.log(recordedBlob);
+        //console.log(recordedBlob);
       });
   }
 
