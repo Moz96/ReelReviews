@@ -60,7 +60,29 @@ export default class extends Controller {
     Rails.ajax({
       url: "/videos",
       type: "post",
-      data: formData
+      data: formData,
+      success: () => {
+        this.savePost();
+      }
+    });
+  }
+
+  savePost() {
+    const form = this.element.querySelector("form");
+    const formData = new FormData(form);
+
+    Rails.ajax({
+      url: "/posts",
+      type: "post",
+      data: formData,
+      success: (response) => {
+        console.log("Post saved successfully:", response);
+        // Handle success response as needed
+      },
+      error: (error) => {
+        console.error("Error saving post:", error);
+        // Handle error response as needed
+      }
     });
   }
 }
