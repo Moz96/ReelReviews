@@ -2,7 +2,7 @@
 <% @places.each do |place| %>
   <% place.posts.each do |post| %>
     <%= cl_video_tag(
-      post.reel.key,
+      post.video.key,
       autoplay: true,
       muted: true,
       loop: true,
