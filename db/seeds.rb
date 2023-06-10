@@ -10,30 +10,36 @@ user = User.create(
   email: "user1@example.com",
   password: "password"
 )
-puts "creating places"
-5.times do
+puts "creating 5 places"
+5.times do |i|
   place = Place.create(
-    name: "Test name",
-    address: "Test address",
-    description: "Test description",
-    category: "Test category",
+    name: "Place #{i + 1}",
+    address: "Adress #{i + 1}",
+    description: "Description #{i + 1}",
+    category: "Test Category",
     url: "https://example.com",
     opening_hours: "10am - 5pm"
   )
-
-  post1 = Post.new(
-    user_id: user.id,
-    place_id: place.id,
-    place_rating: 5
+  puts "adding image to place"
+  place.image.attach(
+    io: File.open("app/assets/images/placeimage#{i + 1}.jpg"),
+    filename: "placeimage#{i + 1}.jpg",
+    content_type: 'image/jpeg'
   )
-  post1.video.attach(io: File.open('app/assets/videos/testreel1.mp4'), filename: 'testreel1.mp4', content_type: 'video/mp4')
-  post1.save
 
-  post2 = Post.new(
-    user_id: user.id,
-    place_id: place.id,
-    place_rating: 5
-  )
-  post2.video.attach(io: File.open('app/assets/videos/testreel2.mp4'), filename: 'testreel2.mp4', content_type: 'video/mp4')
-  post2.save
+  3.times do |j|
+    puts "creating #{j + 1} of 3 posts"
+    post = Post.new(
+      user_id: user.id,
+      place_id: place.id,
+      place_rating: 5
+    )
+    puts "adding video to post"
+    post.video.attach(
+      io: File.open("app/assets/videos/place_#{i + 1}_video_#{j + 1}.mp4"),
+      filename: "place_#{i + 1}_video_#{j + 1}.mp4",
+      content_type: 'video/mp4'
+    )
+    post.save
+  end
 end
