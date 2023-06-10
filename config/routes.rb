@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'posts#index'
-  resources :posts, only: [] do
+  resources :posts do
     post 'videos', to: 'posts#create_video'
   end
   resources :places, only: [:index, :create, :show] do
