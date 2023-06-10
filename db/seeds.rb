@@ -10,28 +10,30 @@ user = User.create(
   email: "user1@example.com",
   password: "password"
 )
+puts "creating places"
+5.times do
+  place = Place.create(
+    name: "Test name",
+    address: "Test address",
+    description: "Test description",
+    category: "Test category",
+    url: "https://example.com",
+    opening_hours: "10am - 5pm"
+  )
 
-place = Place.create(
-  name: "Test name",
-  address: "Test address",
-  description: "Test description",
-  category: "Test category",
-  url: "https://example.com",
-  opening_hours: "10am - 5pm"
-)
+  post1 = Post.new(
+    user_id: user.id,
+    place_id: place.id,
+    place_rating: 5
+  )
+  post1.video.attach(io: File.open('app/assets/videos/testreel1.mp4'), filename: 'testreel1.mp4', content_type: 'video/mp4')
+  post1.save
 
-post1 = Post.new(
-  user_id: user.id,
-  place_id: place.id,
-  place_rating: 5
-)
-post1.video.attach(io: File.open('app/assets/videos/testreel1.mp4'), filename: 'testreel1.mp4', content_type: 'video/mp4')
-post1.save
-
-post2 = Post.new(
-  user_id: user.id,
-  place_id: place.id,
-  place_rating: 5
-)
-post2.video.attach(io: File.open('app/assets/videos/testreel2.mp4'), filename: 'testreel2.mp4', content_type: 'video/mp4')
-post2.save
+  post2 = Post.new(
+    user_id: user.id,
+    place_id: place.id,
+    place_rating: 5
+  )
+  post2.video.attach(io: File.open('app/assets/videos/testreel2.mp4'), filename: 'testreel2.mp4', content_type: 'video/mp4')
+  post2.save
+end
