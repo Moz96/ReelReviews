@@ -1,6 +1,6 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
+import Rails from "@rails/ujs";
 
-// Connects to data-controller="record-video"
 export default class extends Controller {
   static targets = ['startButton', 'stopButton', 'videoElement'];
 
@@ -10,16 +10,16 @@ export default class extends Controller {
 
   start() {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then((videoElement) => {
-        this.videoElementTarget.srcObject = videoElement;
+      .then((stream) => {
+        this.videoElementTarget.srcObject = stream;
         this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
-        console.log(this.videoElementTarget)
+        console.log(this.videoElementTarget);
         return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
       })
       .then(() => this.startRecording(this.videoElementTarget.captureStream()))
       .then((recordedChunks) => {
         const recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
-        //console.log(recordedBlob);
+        this.uploadToCloudinary(recordedBlob);
       });
   }
 
@@ -51,5 +51,16 @@ export default class extends Controller {
 
   stopVideo() {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
+  }
+
+  uploadToCloudinary(videoBlob) {
+    const formData = new FormData();
+    formData.append('video[file]', videoBlob, 'my_video.mp4');
+
+    Rails.ajax({
+      url: "/videos",
+      type: "post",
+      data: formData
+    });
   }
 }
