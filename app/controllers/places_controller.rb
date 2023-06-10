@@ -1,5 +1,6 @@
 class PlacesController < ApplicationController
   before_action :set_place, only: [:show]
+
   def index
     @places = Place.includes(posts: :video_attachment).all
   end
@@ -21,6 +22,7 @@ class PlacesController < ApplicationController
   def show
     @posts = @place.posts
   end
+
 
   private
 
