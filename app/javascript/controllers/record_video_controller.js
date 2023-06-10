@@ -1,6 +1,6 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
+import Rails from "@rails/ujs";
 
-// Connects to data-controller="record-video"
 export default class extends Controller {
   static targets = ['startButton', 'stopButton', 'videoElement'];
 
@@ -13,17 +13,18 @@ export default class extends Controller {
       .then((stream) => {
         this.videoElementTarget.srcObject = stream;
         this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
+        console.log(this.videoElementTarget);
         return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
       })
       .then(() => this.startRecording(this.videoElementTarget.captureStream()))
       .then((recordedChunks) => {
         const recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
-        console.log(recordedBlob);
+        this.uploadToCloudinary(recordedBlob);
       });
   }
 
-  startRecording(stream) {
-    const recorder = new MediaRecorder(stream);
+  startRecording(videoElement) {
+    const recorder = new MediaRecorder(videoElement);
     let data = [];
 
     recorder.ondataavailable = (event) => data.push(event.data);
@@ -39,7 +40,7 @@ export default class extends Controller {
     };
 
     const recorded = stopRecording().then(() => {
-      this.stopVideo();
+      this.stop();
       if (recorder.state === 'recording') {
         recorder.stop();
       }
@@ -48,7 +49,44 @@ export default class extends Controller {
     return Promise.all([stopped, recorded]).then(() => data);
   }
 
-  stopVideo() {
+  stop() {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
+  }
+
+  uploadToCloudinary(videoBlob) {
+    const formData = new FormData();
+    formData.append('video[file]', videoBlob, 'my_video.mp4');
+
+    Rails.ajax({
+      url: "/posts/videos",
+      type: "post",
+      data: formData,
+      success: () => {
+        this.savePost();
+      },
+      error: (error) => {
+        console.error("Error uploading video:", error);
+        // Handle error response as needed
+      }
+    });
+  }
+
+  savePost() {
+    const form = this.element.querySelector("form");
+    const formData = new FormData(form);
+
+    Rails.ajax({
+      url: "/posts",
+      type: "post",
+      data: formData,
+      success: (response) => {
+        console.log("Post saved successfully:", response);
+        // Handle success response as needed
+      },
+      error: (error) => {
+        console.error("Error saving post:", error);
+        // Handle error response as needed
+      }
+    });
   }
 }

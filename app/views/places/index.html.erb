@@ -2,29 +2,35 @@
 <div class="main-content-container">
   <div class="places-list">
     <% @places.each do |place| %>
-      <div id="place_<%= place.id %>" class="place">
+      <div id="place_<%= place.id %>" class="place" data-controller="place">
         <div class="posts-list">
           <% place.posts[0..4].each_with_index do |post, index| %>
-            <div id="post_<%= post.id %>" class="post <%= 'active' if index.zero? %>">
+            <div id="post_<%= post.id %>" class="post <%= 'active' if index.zero? %>" data-place-target="post">
               <%= render partial: 'post', locals: { post: post } %>
             </div>
           <% end %>
         </div>
 
-        <button class="prev">Previous</button>
-        <button class="next">Next</button>
-        <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
+        <div class="content-info">
+
+          <button class="prev" data-action="click->place#prev">Previous</button>
+          <button class="next" data-action="click->place#next">Next</button>
+          <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
           <%= button_to "Favourite", favourites_path(place_id: place.id), method: :post, class: "favourite" %>
       
         <% else %>
           <%= button_to "Unfavourite", favourites_path(place_id: place.id), method: :delete, class: "favourite" %>
         <% end %>
 
-        <div class="content-info">
-          <h2 class="place-name"><%= place.name %></h2>
-          <img src="" alt="" class="avatar">
-          <p class="post-username">username</p>
-          <p class="post-caption"></p>
+          <div class="content-info-background">
+           <div class="content-info-text">
+              <h2 class="place-name"><%= link_to place.name, place_path(place) %></h2>
+              <%# <img src="" alt="" class="avatar"> %>
+              <p class="post-username">username</p>
+              <p class="post-caption"></p>
+            </div>
+          </div>
+
         </div>
       </div>
     <% end %>

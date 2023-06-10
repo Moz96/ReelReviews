@@ -1,0 +1,5 @@
+<% @posts.each do |post| %>
+  <div id="post_<%= post.id %>" class="post" data-place-target="post">
+    <%= render partial: 'post', locals: { post: post } %>
+  </div>
+<% end %>
