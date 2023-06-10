@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'posts#index'
   resources :posts
-  resources :places, only: [:index, :new, :create, :show] do
-    resources :posts do
+  resources :places, only: [:index, :create, :show] do
+    resources :posts, only: [:new, :create] do
+      collection do
+        get 'next_batch'
+      end
       resources :comments, only: [:index, :new, :create]
     end
   end

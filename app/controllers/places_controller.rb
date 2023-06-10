@@ -1,7 +1,7 @@
 class PlacesController < ApplicationController
   before_action :set_place, only: [:show]
   def index
-    @places = Place.all
+    @places = Place.includes(posts: :video_attachment).all
   end
 
   def new

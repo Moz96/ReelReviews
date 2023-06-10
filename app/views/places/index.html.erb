@@ -1,13 +1,26 @@
 <%# render category list %>
-<% @places.each do |place| %>
-  <% place.posts.each do |post| %>
-    <%= cl_video_tag(
-      post.reel.key,
-      autoplay: true,
-      muted: true,
-      loop: true,
-      controls: true,
-      fallback_content: "Your browser does not support HTML5 video tags." )
-     %>
-  <% end %>
-<% end %>
+<div class="main-content-container">
+  <div class="places-list">
+    <% @places.each do |place| %>
+      <div id="place_<%= place.id %>" class="place">
+        <div class="posts-list">
+          <% place.posts[0..4].each_with_index do |post, index| %>
+            <div id="post_<%= post.id %>" class="post <%= 'active' if index.zero? %>">
+              <%= render partial: 'post', locals: { post: post } %>
+            </div>
+          <% end %>
+        </div>
+
+        <button class="prev">Previous</button>
+        <button class="next">Next</button>
+
+        <div class="content-info">
+          <h2 class="place-name"><%= place.name %></h2>
+          <img src="" alt="" class="avatar">
+          <p class="post-username">username</p>
+          <p class="post-caption"></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
