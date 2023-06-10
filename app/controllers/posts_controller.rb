@@ -11,10 +11,11 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-    if @post.save!
-      redirect_to root
+    if @post.save
+      process_video if params.dig(:post, :video).present?
+      redirect_to @post, notice: 'Post created successfully.'
     else
-      flash.now[:alert] = 'Reel could not be uploaded'
+      render :new
     end
   end
 
@@ -36,5 +37,13 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
+  end
+
+  def process_video
+    video_file = params[:post][:video]
+    cloudinary_response = Cloudinary::Uploader.upload(video_file.tempfile)
+    @post.video_url = cloudinary_response['secure_url']
+    @post.video_public_id = cloudinary_response['public_id']
+    @post.save
   end
 end
