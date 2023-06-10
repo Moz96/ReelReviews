@@ -44,9 +44,9 @@ html, body {
 
 .post.active {
   display: block;
-  text-align: center;
 }
 
 .post {
   display: none;
+  text-align: center;
 }

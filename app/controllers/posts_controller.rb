@@ -28,7 +28,7 @@ class PostsController < ApplicationController
   def next_batch
     last_post_id = params[:after_id]
     @posts = Post.where("id > ? AND place_id = ?", last_post_id, params[:place_id]).limit(5)
-    render layout: false
+    render partial: "posts/next_batch", layout: false
   end
 
   private
