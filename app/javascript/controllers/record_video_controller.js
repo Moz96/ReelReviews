@@ -40,7 +40,7 @@ export default class extends Controller {
     };
 
     const recorded = stopRecording().then(() => {
-      this.stopVideo();
+      this.stop();
       if (recorder.state === 'recording') {
         recorder.stop();
       }
@@ -49,7 +49,7 @@ export default class extends Controller {
     return Promise.all([stopped, recorded]).then(() => data);
   }
 
-  stopVideo() {
+  stop() {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
 
