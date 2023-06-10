@@ -22,6 +22,12 @@ class PostsController < ApplicationController
     @comments = posts.comments
   end
 
+  def next_batch
+    last_post_id = params[:after_id]
+    @posts = Post.where("id > ? AND place_id = ?", last_post_id, params[:place_id]).limit(5)
+    render layout: false
+  end
+
   private
 
   def post_params
