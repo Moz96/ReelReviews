@@ -13,6 +13,12 @@
 
         <button class="prev">Previous</button>
         <button class="next">Next</button>
+        <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
+          <%= button_to "Favourite", favourites_path(place_id: place.id), method: :post, class: "favourite" %>
+      
+        <% else %>
+          <%= button_to "Unfavourite", favourites_path(place_id: place.id), method: :delete, class: "favourite" %>
+        <% end %>
 
         <div class="content-info">
           <h2 class="place-name"><%= place.name %></h2>
@@ -24,3 +30,30 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const favoriteButtons = document.querySelectorAll(".favourite");
+
+    favoriteButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const placeId = button.getAttribute("data-place-id");
+
+        // Send AJAX request to favorite action
+        fetch(`/favourites?place_id=${placeId}`, { method: "POST" })
+          .then(response => {
+            if (response.ok) {
+              // Favourite request successful
+              console.log("Place favorited");
+            } else {
+              // Handle error
+              console.error("Failed to favorite place");
+            }
+          })
+          .catch(error => {
+            console.error("Failed to favorite place", error);
+          });
+      });
+    });
+  });
+</script>
