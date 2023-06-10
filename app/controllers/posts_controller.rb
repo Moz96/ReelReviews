@@ -11,16 +11,18 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
+
     if @post.save
-      process_video if params.dig(:post, :video).present?
+      create_video if params.dig(:post, :video).present?
       redirect_to @post, notice: 'Post created successfully.'
     else
       render :new
     end
   end
 
+
   def show
-    @comments = posts.comments
+    @comments = @post.comments
   end
 
   def next_batch
@@ -39,7 +41,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def process_video
+  def create_video
     video_file = params[:post][:video]
     cloudinary_response = Cloudinary::Uploader.upload(video_file.tempfile)
     @post.video_url = cloudinary_response['secure_url']
