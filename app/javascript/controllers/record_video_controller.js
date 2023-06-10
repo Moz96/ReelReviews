@@ -58,7 +58,7 @@ export default class extends Controller {
     formData.append('video[file]', videoBlob, 'my_video.mp4');
 
     Rails.ajax({
-      url: "/videos",
+      url: "/posts",
       type: "post",
       data: formData,
       success: () => {

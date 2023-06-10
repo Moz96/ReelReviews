@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show]
+
   def index
     @posts = Post.all
   end
@@ -20,7 +21,6 @@ class PostsController < ApplicationController
     end
   end
 
-
   def show
     @comments = @post.comments
   end
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require.(:post).permit(:user_id, :place_id, :place_rating, :video)
+    params.require(:post)permit(:user_id, :place_id, :place_rating, :video)
   end
 
   def set_post
