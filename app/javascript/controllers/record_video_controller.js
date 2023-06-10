@@ -42,7 +42,7 @@ export default class extends Controller {
     const recorded = stopRecording().then(() => {
       this.stopVideo();
       if (recorder.state === 'recording') {
-        recorder.stop();
+        recorder.stopVideo();
       }
     });
 
@@ -50,7 +50,7 @@ export default class extends Controller {
   }
 
   stopVideo() {
-    this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
+    this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stopVideo());
   }
 
   uploadToCloudinary(videoBlob) {
