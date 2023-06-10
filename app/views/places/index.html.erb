@@ -19,7 +19,7 @@
 
           <div class="content-info-background">
            <div class="content-info-text">
-              <h2 class="place-name"><%= place.name %></h2>
+              <h2 class="place-name"><%= link_to place.name, place_path(place) %></h2>
               <%# <img src="" alt="" class="avatar"> %>
               <p class="post-username">username</p>
               <p class="post-caption"></p>
