@@ -10,8 +10,8 @@ export default class extends Controller {
 
   start() {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        this.videoElementTarget.srcObject = stream;
+      .then((videoElement) => {
+        this.videoElementTarget.srcObject = videoElement;
         this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
         console.log(this.videoElementTarget)
         return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
@@ -23,8 +23,8 @@ export default class extends Controller {
       });
   }
 
-  startRecording(stream) {
-    const recorder = new MediaRecorder(stream);
+  startRecording(videoElement) {
+    const recorder = new MediaRecorder(videoElement);
     let data = [];
 
     recorder.ondataavailable = (event) => data.push(event.data);
