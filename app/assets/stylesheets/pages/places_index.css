@@ -1,0 +1,28 @@
+/* .main-content-container {
+
+}
+
+.posts-list {
+  width: 100vw;
+}
+
+.places-list {
+
+}
+
+.content-info {
+
+}
+
+.reel {
+  width: 100%;
+  height: 100dvh;
+} */
+
+.post.active {
+  display: block;
+}
+
+.post {
+  display: none;
+}
