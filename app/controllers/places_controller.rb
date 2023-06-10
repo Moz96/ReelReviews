@@ -19,16 +19,16 @@ class PlacesController < ApplicationController
   end
 
   def show
-    @posts = places.posts
+    @posts = @place.posts
   end
 
   private
 
   def place_params
-    params.require(:place).permit(:name, :address, :description)
+    params.require(:place).permit(:name, :address, :description, :category, :url, :opening_hours)
   end
 
   def set_place
-    @place = Place.find_by(params[:id])
+    @place = Place.find(params[:id])
   end
 end
