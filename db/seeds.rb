@@ -22,13 +22,13 @@ puts "creating 5 places"
   )
   puts "adding image to place"
   place.image.attach(
-    io: File.open("app/assets/images/placeimage#{i}.jpg"),
-    filename: "placeimage#{i}.jpg",
+    io: File.open("app/assets/images/placeimage#{i + 1}.jpg"),
+    filename: "placeimage#{i + 1}.jpg",
     content_type: 'image/jpeg'
   )
 
   3.times do |j|
-    puts "creating #{j} of 3 posts"
+    puts "creating #{j + 1} of 3 posts"
     post = Post.new(
       user_id: user.id,
       place_id: place.id,
@@ -36,8 +36,8 @@ puts "creating 5 places"
     )
     puts "adding video to post"
     post.video.attach(
-      io: File.open("app/assets/videos/place_#{i}_video#{j}.mp4"),
-      filename: "place_#{i}_video#{j}.mp4",
+      io: File.open("app/assets/videos/place_#{i + 1}_video_#{j + 1}.mp4"),
+      filename: "place_#{i + 1}_video_#{j + 1}.mp4",
       content_type: 'video/mp4'
     )
     post.save
