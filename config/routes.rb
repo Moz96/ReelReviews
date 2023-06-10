@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     post 'videos', to: 'posts#create_video', on: :collection
   end
   resources :places, only: [:index, :create, :show] do
-    resources :posts, only: [:new, :create] do
+    resources :posts, only: [:index, :new, :create] do
       collection do
         get 'next_batch'
       end
