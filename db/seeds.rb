@@ -13,9 +13,9 @@ user = User.create(
 puts "creating 5 places"
 5.times do |i|
   place = Place.create(
-    name: "Place #{i}",
-    address: "Adress #{i}",
-    description: "Description #{i}",
+    name: "Place #{i + 1}",
+    address: "Adress #{i + 1}",
+    description: "Description #{i + 1}",
     category: "Test Category",
     url: "https://example.com",
     opening_hours: "10am - 5pm"
