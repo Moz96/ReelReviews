@@ -13,12 +13,12 @@
 
         <div class="content-info">
 
-          <button class="prev" data-action="click->place#prev">Previous</button>
-          <button class="next" data-action="click->place#next">Next</button>
+          <a href="" class="prev" data-action="click->place#prev"><</a>
+          <a href="" class="next" data-action="click->place#next">></button>
           <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
-            <%= button_to "Favourite", favourites_path(place_id: place.id), method: :post, class: "favourite" %>
+            <%= link_to "Favourite", favourites_path(place_id: place.id), method: :post, class: "favourite" %>
           <% else %>
-            <%= button_to "Unfavourite", favourites_path(place_id: place.id), method: :delete, class: "favourite" %>
+            <%= link_to "Unfavourite", favourites_path(place_id: place.id), method: :delete, class: "favourite" %>
           <% end %>
 
           <div class="content-info-background">
