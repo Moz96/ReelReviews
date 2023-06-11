@@ -68,11 +68,11 @@ a {
 .prev {
   position: absolute;
   bottom: 50dvh;
-  right: 1rem;
+  left: 1rem;
 }
 
 .next {
   position: absolute;
   bottom: 50dvh;
-  left: 1rem;
+  right: 1rem;
 }
