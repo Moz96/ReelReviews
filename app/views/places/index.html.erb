@@ -16,11 +16,10 @@
           <button class="prev" data-action="click->place#prev">Previous</button>
           <button class="next" data-action="click->place#next">Next</button>
           <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
-          <%= button_to "Favourite", favourites_path(place_id: place.id), method: :post, class: "favourite" %>
-      
-        <% else %>
-          <%= button_to "Unfavourite", favourites_path(place_id: place.id), method: :delete, class: "favourite" %>
-        <% end %>
+            <%= button_to "Favourite", favourites_path(place_id: place.id), method: :post, class: "favourite" %>
+          <% else %>
+            <%= button_to "Unfavourite", favourites_path(place_id: place.id), method: :delete, class: "favourite" %>
+          <% end %>
 
           <div class="content-info-background">
            <div class="content-info-text">

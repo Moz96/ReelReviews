@@ -64,3 +64,15 @@ a {
   display: none;
   text-align: center;
 }
+
+.prev {
+  position: absolute;
+  bottom: 50dvh;
+  right: 1rem;
+}
+
+.next {
+  position: absolute;
+  bottom: 50dvh;
+  left: 1rem;
+}
