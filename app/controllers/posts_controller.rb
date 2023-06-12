@@ -10,17 +10,29 @@ class PostsController < ApplicationController
     @post = @place.posts.build
   end
 
+  # def create
+  #   @post = @place.posts.build(post_params)
+  #   @post.user = current_user
+
+  #   if @post.save
+  #     create_video if params.dig(:post, :video).present?
+  #     redirect_to @place, notice: 'Post created successfully.'
+  #   else
+  #     render :new
+  #   end
+  # end
+
   def create
     @post = @place.posts.build(post_params)
     @post.user = current_user
 
     if @post.save
-      create_video if params.dig(:post, :video).present?
       redirect_to @place, notice: 'Post created successfully.'
     else
       render :new
     end
   end
+
 
   def show
     @comments = @post.comments
