@@ -9,6 +9,10 @@
       <%= f.number_field :place_rating %>
     </div>
     <%= f.submit "Create Post" %>
+
+    <%= f.hidden_field :video_url, id: 'hidden_video_url' %>
+    <%= f.hidden_field :video_public_id, id: 'hidden_video_public_id' %>
+
   <% end %>
 
   <h2>Record your video</h2>
