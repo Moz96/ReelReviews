@@ -35,11 +35,13 @@ puts "creating 5 places"
       place_rating: 5
     )
     puts "adding video to post"
-    post.video.attach(
-      io: File.open("app/assets/videos/place_#{i + 1}_video_#{j + 1}.mp4"),
-      filename: "place_#{i + 1}_video_#{j + 1}.mp4",
-      content_type: 'video/mp4'
-    )
+
+    video_path = "app/assets/videos/place_#{i + 1}_video_#{j + 1}.mp4"
+    cloudinary_response = Cloudinary::Uploader.upload(video_path, resource_type: "video")
+
+    post.video_url = cloudinary_response["secure_url"]
+    post.video_public_id = cloudinary_response["public_id"]
+
     post.save
   end
 end
