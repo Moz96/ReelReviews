@@ -53,22 +53,43 @@ export default class extends Controller {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
 
+  // uploadToCloudinary(videoBlob) {
+  //   const formData = new FormData();
+  //   formData.append('video[file]', videoBlob, 'my_video.mp4');
+
+  //   Rails.ajax({
+  //     url: "/posts/videos",
+  //     type: "post",
+  //     data: formData,
+  //     success: () => {
+  //       this.savePost();
+  //     },
+  //     error: (error) => {
+  //       console.error("Error uploading video:", error);
+  //       // Handle error response as needed
+  //     }
+  //   });
+  // }
+
   uploadToCloudinary(videoBlob) {
     const formData = new FormData();
-    formData.append('video[file]', videoBlob, 'my_video.mp4');
+    formData.append('file', videoBlob, 'my_video.mp4');
+    formData.append('upload_preset', 'm2tzhcc6');
 
-    Rails.ajax({
-      url: "/posts/videos",
-      type: "post",
-      data: formData,
-      success: () => {
-        this.savePost();
-      },
-      error: (error) => {
-        console.error("Error uploading video:", error);
-        // Handle error response as needed
-      }
-    });
+    fetch('https://api.cloudinary.com/v1_1/dfmuyxggs/upload', {
+      method: 'POST',
+      body: formData
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.secure_url) {
+          // Store the video URL and the public_id in hidden fields
+          document.querySelector('#hidden_video_url').value = data.secure_url;
+          document.querySelector('#hidden_video_public_id').value = data.public_id;
+          this.savePost();
+        }
+      })
+      .catch((error) => console.error('Error uploading video:', error));
   }
 
   savePost() {
