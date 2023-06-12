@@ -4,7 +4,7 @@
     <% @places.each do |place| %>
       <div id="place_<%= place.id %>" class="place" data-controller="place">
         <div class="posts-list">
-          <% place.posts[0..4].each_with_index do |post, index| %>
+          <% place.posts.order('created_at DESC')[0..4].each_with_index do |post, index| %>
             <div id="post_<%= post.id %>" class="post <%= 'active' if index.zero? %>" data-place-target="post">
               <%= render partial: 'post', locals: { post: post } %>
             </div>
