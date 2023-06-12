@@ -1,5 +1,5 @@
-<div data-controller="record-video">
-  <%= form_with(model: @post, local: true) do |f| %>
+<div data-controller="record-video" data-place-id="<%= @place.id %>">
+  <%= form_with(model: [@place, @post], local: true) do |f| %>
     <div class="form-inputs">
       <%= f.label :video %>
       <%= f.file_field :video %>

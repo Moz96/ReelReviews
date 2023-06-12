@@ -93,11 +93,12 @@ export default class extends Controller {
   }
 
   savePost() {
+    const place_id = this.element.dataset.placeId;
     const form = this.element.querySelector("form");
     const formData = new FormData(form);
 
     Rails.ajax({
-      url: "/posts",
+      url: `/places/${place_id}/posts`,
       type: "post",
       data: formData,
       success: (response) => {
