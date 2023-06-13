@@ -1,6 +1,7 @@
 <h1>Favourites</h1>
 <ul>
-  <% @places.each do |place| %>
+  <% current_user.favourites.each do |favourite| %>
+    <% place = favourite.place %>
     <% place.posts.each do |post| %>
       <li class="favourite-item">
         <div class="video-container">
