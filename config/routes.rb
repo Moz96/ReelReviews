@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'places#index'
-  resources :posts do
-    post 'videos', to: 'posts#create_video', on: :collection
-  end
+  # resources :posts do
+  #   post 'videos', to: 'posts#create_video', on: :collection
+  # end
   resources :places, only: [:index, :create, :show] do
     resources :posts, only: [:index, :new, :create] do
       collection do
@@ -18,5 +18,3 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 end
-
-
