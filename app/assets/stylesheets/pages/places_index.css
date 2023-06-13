@@ -64,3 +64,18 @@ a {
   display: none;
   text-align: center;
 }
+
+.prev, .next {
+  position: absolute;
+  bottom: 50dvh;
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.prev {
+  left: 1rem;
+}
+
+.next {
+  right: 1rem;
+}

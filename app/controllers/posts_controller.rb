@@ -10,17 +10,29 @@ class PostsController < ApplicationController
     @post = @place.posts.build
   end
 
+  # def create
+  #   @post = @place.posts.build(post_params)
+  #   @post.user = current_user
+
+  #   if @post.save
+  #     create_video if params.dig(:post, :video).present?
+  #     redirect_to @place, notice: 'Post created successfully.'
+  #   else
+  #     render :new
+  #   end
+  # end
+
   def create
     @post = @place.posts.build(post_params)
     @post.user = current_user
 
     if @post.save
-      create_video if params.dig(:post, :video).present?
       redirect_to @place, notice: 'Post created successfully.'
     else
       render :new
     end
   end
+
 
   def show
     @comments = @post.comments
@@ -32,19 +44,20 @@ class PostsController < ApplicationController
     render partial: "posts/next_batch", layout: false
   end
 
-  def create_video
-    video_file = params[:post][:video]
-    cloudinary_response = Cloudinary::Uploader.upload(video_file.tempfile)
-    @post.video_url = cloudinary_response['secure_url']
-    @post.video_public_id = cloudinary_response['public_id']
-    @post.save
-  end
+  # def create_video
+  #   video_file = params[:post][:video]
+  #   cloudinary_response = Cloudinary::Uploader.upload(video_file.tempfile)
+  #   @post.video_url = cloudinary_response['secure_url']
+  #   @post.video_public_id = cloudinary_response['public_id']
+  #   @post.save
+  # end
 
   private
 
   def post_params
-    params.require(:post).permit(:place_rating, :video)
+    params.require(:post).permit(:place_rating, :video_url, :video_public_id)
   end
+
 
   def set_place
     @place = Place.find(params[:place_id])
