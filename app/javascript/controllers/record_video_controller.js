@@ -76,7 +76,7 @@ export default class extends Controller {
     formData.append('file', videoBlob, 'my_video.mp4');
     formData.append('upload_preset', 'rpa47g8k');
 
-    fetch('https://api.cloudinary.com/v1_1/dfmuyxggs/upload', {
+    fetch('https://api.cloudinary.com/v1_1/rpa47g8k/upload', {
       method: 'POST',
       body: formData
     })

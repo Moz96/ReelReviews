@@ -55,11 +55,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-<<<<<<< HEAD
-    params.require(:post).permit(:place_id, :place_rating, :video)
-=======
     params.require(:post).permit(:place_rating, :video_url, :video_public_id)
->>>>>>> b4053233d0335e9c1ed974db2ef3dc44c3713f6a
   end
 
 
