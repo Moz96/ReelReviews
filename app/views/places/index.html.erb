@@ -18,7 +18,7 @@
           <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
             <%= link_to "Favourite", favourites_path(place_id: place.id), data: { turbo: true, turbo_method: :post }, class: "favourite" %>
           <% else %>
-            <%= link_to "Unfavourite", favourites_path(place_id: place.id), method: :delete, class: "favourite" %>
+            <%= link_to "Unfavourite", favourites_path(place_id: place.id), data: { turbo: true, turbo_method: :post}, class: "favourite" %>
           <% end %>
 
           <div class="content-info-background">
