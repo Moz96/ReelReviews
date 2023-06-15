@@ -9,7 +9,12 @@ export default class extends Controller {
   }
 
   start() {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    navigator.mediaDevices.getUserMedia({ video: {
+      facingMode: {
+        exact: 'environment'
+      }
+    },
+    audio: true})
       .then((stream) => {
         this.videoElementTarget.srcObject = stream;
         this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
@@ -53,30 +58,30 @@ export default class extends Controller {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
 
-  switchCamera() {
-    const constraints = {
-      video: {
-        facingMode: {
-          exact: 'environment'
-        }
-      },
-      audio: true
-    };
+  // switchCamera() {
+  //   const constraints = {
+  //     video: {
+  //       facingMode: {
+  //         exact: 'environment'
+  //       }
+  //     },
+  //     audio: true
+  //   };
 
-    const currentStream = this.videoElementTarget.srcObject;
+  //   const currentStream = this.videoElementTarget.srcObject;
 
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then((stream) => {
-        const videoTracks = stream.getVideoTracks();
-        currentStream.getVideoTracks().forEach((track) => track.stop());
-        videoTracks.forEach((track) => currentStream.addTrack(track));
-        this.videoElementTarget.srcObject = currentStream;
-      })
-      .catch((error) => {
-        console.error('Error switching camera:', error);
-        this.videoElementTarget.srcObject = currentStream;
-      });
-  }
+  //   navigator.mediaDevices.getUserMedia(constraints)
+  //     .then((stream) => {
+  //       const videoTracks = stream.getVideoTracks();
+  //       currentStream.getVideoTracks().forEach((track) => track.stop());
+  //       videoTracks.forEach((track) => currentStream.addTrack(track));
+  //       this.videoElementTarget.srcObject = currentStream;
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error switching camera:', error);
+  //       this.videoElementTarget.srcObject = currentStream;
+  //     });
+  // }
 
  // switchCamera() {
    // const videoTracks = this.videoElementTarget.srcObject.getVideoTracks();
