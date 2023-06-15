@@ -61,15 +61,13 @@ export default class extends Controller {
     const newFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
 
     const videoConstraints = {
-      video: { facingMode: newFacingMode },
+      video: { facingMode: { exact: newFacingMode } },
       audio: true
     };
 
     navigator.mediaDevices.getUserMedia(videoConstraints)
       .then((stream) => {
-        const newVideoTracks = stream.getVideoTracks();
         this.videoElementTarget.srcObject = stream;
-        videoTracks.forEach((track) => track.stop());
       })
       .catch((error) => {
         console.error('Error switching camera:', error);
