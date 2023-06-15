@@ -2,29 +2,20 @@
 <ul>
   <% current_user.favourites.each do |favourite| %>
     <% place = favourite.place %>
-    <% place.posts.each do |post| %>
-      <li class="favourite-item">
-        <div class="video-container">
-          <%= cl_video_tag(
-            post.video_url,
-            autoplay: true,
-            muted: true,
-            loop: true,
-            controls: true,
-            fallback_content: "Your browser does not support HTML5 video tags."
-          ) %>
+    <li class="favourite-item">
+     <div class="image-container">
+  <%= image_tag(place.image.url) %>
+    </div>
+      <div class="item-details">
+        <div class="item-name">
+          <%= place.name %>
+          <span class="favourite-icon"><i class="fas fa-heart"></i></span>
         </div>
-        <div class="item-details">
-          <div class="item-name">
-            <%= place.name %>
-            <span class="favourite-icon"><i class="fas fa-heart"></i></span>
-          </div>
-          <div class="item-description">
-            <%= place.description %>
-            <span class="reshare-icon"><i class="fas fa-share"></i></span>
-          </div>
+        <div class="item-description">
+          <%= place.description %>
+          <span class="reshare-icon"><i class="fas fa-share"></i></span>
         </div>
-      </li>
-    <% end %>
+      </div>
+    </li>
   <% end %>
 </ul>
