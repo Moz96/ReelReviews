@@ -49,7 +49,6 @@ export default class extends Controller {
     return Promise.all([stopped, recorded]).then(() => data);
   }
 
-
   stop() {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
@@ -62,15 +61,24 @@ export default class extends Controller {
     const newFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
 
     const videoConstraints = {
-      video: { facingMode: { exact: newFacingMode } },
+      video: { facingMode: newFacingMode },
       audio: true
     };
 
+    const currentStream = this.videoElementTarget.srcObject;
+    this.videoElementTarget.srcObject = null;
+
     navigator.mediaDevices.getUserMedia(videoConstraints)
       .then((stream) => {
-        this.videoElementTarget.srcObject = stream;
+        const newVideoTracks = stream.getVideoTracks();
+        currentStream.getVideoTracks().forEach((track) => track.stop());
+        newVideoTracks.forEach((track) => currentStream.addTrack(track));
+        this.videoElementTarget.srcObject = currentStream;
       })
-      .catch((error) => console.error('Error switching camera:', error));
+      .catch((error) => {
+        console.error('Error switching camera:', error);
+        this.videoElementTarget.srcObject = currentStream;
+      });
   }
   // uploadToCloudinary(videoBlob) {
   //   const formData = new FormData();
