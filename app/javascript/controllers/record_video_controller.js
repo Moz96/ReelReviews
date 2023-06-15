@@ -4,14 +4,16 @@ import Rails from "@rails/ujs";
 export default class extends Controller {
   static targets = ['startButton', 'stopButton', 'videoElement'];
 
+  isFrontFacing = true;
+
   connect() {
     console.log('Record Video controller connected');
   }
 
-  start() {
+  start(flag) {
     navigator.mediaDevices.getUserMedia({ video: {
       facingMode: {
-        exact: 'environment'
+        exact: flag ? 'environment' : 'user'
       }
     },
     audio: true})
@@ -26,6 +28,11 @@ export default class extends Controller {
         const recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
         this.uploadToCloudinary(recordedBlob);
       });
+  }
+
+  toggleFlag(){
+    isFrontFacing = !isFrontFacing;
+    this.start(this.isFrontFacing);
   }
 
   startRecording(videoElement) {
@@ -53,6 +60,8 @@ export default class extends Controller {
 
     return Promise.all([stopped, recorded]).then(() => data);
   }
+
+
 
   stop() {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
