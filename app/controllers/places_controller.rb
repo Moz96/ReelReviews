@@ -3,6 +3,7 @@ class PlacesController < ApplicationController
 
   def index
     @places = Place.includes(:posts).all
+    @categories = ['Popular', 'Culture', 'Restaurants', 'Bars', 'Late Night', 'Cafés', 'Fitness', 'Parks']
   end
 
   def new
