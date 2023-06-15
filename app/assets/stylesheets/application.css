@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+ /* Hide scrollbar for Firefox */
+.html {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.body {
+  -ms-overflow-style: none;
+}
