@@ -4,16 +4,18 @@ import Rails from "@rails/ujs";
 export default class extends Controller {
   static targets = ['startButton', 'stopButton', 'videoElement'];
 
-  isFrontFacing = true;
+  static isFrontFacing = true;
 
   connect() {
     console.log('Record Video controller connected');
   }
 
-  start(flag) {
+  start() {
+    let cameraMode = this.isFrontFacing ? 'environment' : 'user'
+    console.log("Start called with camera mode: " + cameraMode)
     navigator.mediaDevices.getUserMedia({ video: {
       facingMode: {
-        exact: flag ? 'environment' : 'user'
+        exact: cameraMode
       }
     },
     audio: true})
@@ -31,8 +33,10 @@ export default class extends Controller {
   }
 
   toggleFlag(){
-    isFrontFacing = !isFrontFacing;
-    this.start(this.isFrontFacing);
+    console.log("isFrontFacing before toggle" + this.isFrontFacing)
+    this.isFrontFacing = !this.isFrontFacing;
+    console.log("isFrontFacing after toggle" + this.isFrontFacing)
+    this.start();
   }
 
   startRecording(videoElement) {
