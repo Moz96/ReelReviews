@@ -65,19 +65,14 @@ export default class extends Controller {
       audio: true
     };
 
-    const currentStream = this.videoElementTarget.srcObject;
-    this.videoElementTarget.srcObject = null;
-
     navigator.mediaDevices.getUserMedia(videoConstraints)
       .then((stream) => {
         const newVideoTracks = stream.getVideoTracks();
-        currentStream.getVideoTracks().forEach((track) => track.stop());
-        newVideoTracks.forEach((track) => currentStream.addTrack(track));
-        this.videoElementTarget.srcObject = currentStream;
+        this.videoElementTarget.srcObject = stream;
+        videoTracks.forEach((track) => track.stop());
       })
       .catch((error) => {
         console.error('Error switching camera:', error);
-        this.videoElementTarget.srcObject = currentStream;
       });
   }
   // uploadToCloudinary(videoBlob) {
