@@ -62,7 +62,7 @@ export default class extends Controller {
     const newFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
 
     const videoConstraints = {
-      video: { facingMode: newFacingMode },
+      video: { facingMode: { exact: newFacingMode } },
       audio: true
     };
 
