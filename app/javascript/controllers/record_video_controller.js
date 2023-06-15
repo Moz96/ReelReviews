@@ -49,10 +49,29 @@ export default class extends Controller {
     return Promise.all([stopped, recorded]).then(() => data);
   }
 
+
   stop() {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
 
+  switchCamera() {
+    const videoTracks = this.videoElementTarget.srcObject.getVideoTracks();
+    if (videoTracks.length === 0) return;
+
+    const currentFacingMode = videoTracks[0].getSettings().facingMode;
+    const newFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+
+    const videoConstraints = {
+      video: { facingMode: newFacingMode },
+      audio: true
+    };
+
+    navigator.mediaDevices.getUserMedia(videoConstraints)
+      .then((stream) => {
+        this.videoElementTarget.srcObject = stream;
+      })
+      .catch((error) => console.error('Error switching camera:', error));
+  }
   // uploadToCloudinary(videoBlob) {
   //   const formData = new FormData();
   //   formData.append('video[file]', videoBlob, 'my_video.mp4');
@@ -73,7 +92,7 @@ export default class extends Controller {
 
   uploadToCloudinary(videoBlob) {
     const formData = new FormData();
-    formData.append('file', videoBlob);
+    formData.append('file', videoBlob, 'my_video');
     formData.append('upload_preset', 'rpa47g8k');
 
     fetch('https://api.cloudinary.com/v1_1/dwang9o22/upload', {
