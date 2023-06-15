@@ -53,24 +53,28 @@ export default class extends Controller {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
 
-  switchCamera() {
-    const videoTracks = this.videoElementTarget.srcObject.getVideoTracks();
-    if (videoTracks.length === 0) return;
-
-    const currentFacingMode = videoTracks[0].getSettings().facingMode;
-    const newFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
-
-    const videoConstraints = {
-      video: { facingMode: { exact: newFacingMode } },
+  switchCamera(cameraFacing) {
+    const constraints = {
+      video: {
+        facingMode: {
+          exact: cameraFacing
+        }
+      },
       audio: true
     };
 
-    navigator.mediaDevices.getUserMedia(videoConstraints)
+    const currentStream = this.videoElementTarget.srcObject;
+
+    navigator.mediaDevices.getUserMedia(constraints)
       .then((stream) => {
-        this.videoElementTarget.srcObject = stream;
+        const videoTracks = stream.getVideoTracks();
+        currentStream.getVideoTracks().forEach((track) => track.stop());
+        videoTracks.forEach((track) => currentStream.addTrack(track));
+        this.videoElementTarget.srcObject = currentStream;
       })
       .catch((error) => {
         console.error('Error switching camera:', error);
+        this.videoElementTarget.srcObject = currentStream;
       });
   }
   // uploadToCloudinary(videoBlob) {
