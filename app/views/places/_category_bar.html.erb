@@ -1,0 +1,9 @@
+  <div class="category-bar">
+    <ul class="category-list">
+      <% @categories.each do |category| %>
+        <li>
+          <%= image_tag "icons/categories/#{category}.svg", alt: "#{category} icon", class: "icon-category" %><%=category%>
+        </li>
+      <% end %>
+    </ul>
+  </div>

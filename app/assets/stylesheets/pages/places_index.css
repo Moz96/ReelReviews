@@ -54,6 +54,8 @@ a {
 
 .video {
   height: 100dvh;
+  width: 100vw;
+  ;
 }
 
 .post.active {
