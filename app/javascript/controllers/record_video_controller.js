@@ -53,11 +53,11 @@ export default class extends Controller {
     this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
 
-  switchCamera(cameraFacing) {
+  switchCamera() {
     const constraints = {
       video: {
         facingMode: {
-          exact: cameraFacing
+          exact: 'environment'
         }
       },
       audio: true
@@ -77,6 +77,27 @@ export default class extends Controller {
         this.videoElementTarget.srcObject = currentStream;
       });
   }
+
+ // switchCamera() {
+   // const videoTracks = this.videoElementTarget.srcObject.getVideoTracks();
+   // if (videoTracks.length === 0) return;
+
+   // const currentFacingMode = videoTracks[0].getSettings().facingMode;
+   // const newFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+
+   // const videoConstraints = {
+     // video: { facingMode: { exact: newFacingMode } },
+     // audio: true
+   // };
+
+   // navigator.mediaDevices.getUserMedia(videoConstraints)
+     // .then((stream) => {
+       // this.videoElementTarget.srcObject = stream;
+     // })
+     // .catch((error) => {
+      //  console.error('Error switching camera:', error);
+     // });
+  //}
   // uploadToCloudinary(videoBlob) {
   //   const formData = new FormData();
   //   formData.append('video[file]', videoBlob, 'my_video.mp4');
