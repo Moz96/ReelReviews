@@ -19,11 +19,11 @@ body::-webkit-scrollbar {
 }
 
  /* Hide scrollbar for Firefox */
-.html {
+html {
   scrollbar-width: none;
 }
 
 /* Hide scrollbar for IE and Edge */
-.body {
+body {
   -ms-overflow-style: none;
 }

@@ -4,6 +4,11 @@ class PlacesController < ApplicationController
   def index
     @places = Place.includes(:posts).all
     @categories = ['Popular', 'Culture', 'Restaurants', 'Bars', 'Outdoors', 'Late Night', 'Cafés', 'Fitness']
+    @places = if params[:category]
+                Place.where(category: params[:category])
+              else
+                Place.where(category: 'Fitness')
+              end
   end
 
   def new

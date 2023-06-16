@@ -2,7 +2,10 @@
     <ul class="category-list">
       <% @categories.each do |category| %>
         <li>
-          <%= image_tag "icons/categories/#{category}.svg", alt: "#{category} icon", class: "icon-category" %><%=category%>
+          <%= link_to places_path(category: category) do %>
+          <%= image_tag "icons/categories/#{category}.svg", alt: "#{category} icon", class: "icon-category" %>
+          <%=category%>
+          <% end %>
         </li>
       <% end %>
     </ul>
