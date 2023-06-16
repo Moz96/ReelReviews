@@ -40,7 +40,18 @@ users = User.all
     name: "Place #{j + 1}",
     address: "Adress #{j + 1}",
     description: "Description #{j + 1}",
-    category: 'Test Category',
+    category: case j
+              when 0
+                'Culture'
+              when 1
+                'Bars'
+              when 2
+                'Bars'
+              when 3
+                'Culture'
+              when 4
+                'Fitness'
+              end,
     url: 'https://example.com',
     opening_hours: '10am - 5pm'
   )
