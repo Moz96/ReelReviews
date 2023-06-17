@@ -38,7 +38,7 @@ users = User.all
   progress_bar.title = colorize(" Creating Place #{j + 1} of 5", yellow)
   place = Place.create(
     name: "Place #{j + 1}",
-    address: "Abbey Road #{j + 1}",
+    address: "Adress #{j + 1}",
     description: "Description #{j + 1}",
     category: case j
               when 0
@@ -75,6 +75,7 @@ users = User.all
     progress_bar.title = colorize(' Uploading Video...', yellow)
 
     video_path = "app/assets/videos/place_#{j + 1}_video_#{k + 1}.mp4"
+    
     cloudinary_response = Cloudinary::Uploader.upload(video_path, resource_type: 'video')
 
     post.video_url = cloudinary_response['secure_url']

@@ -21,7 +21,8 @@ export default class extends Controller {
 
   }  
 
-  #addMarkersToMap() {
+  addMarkersToMap() {
+    console.log(this.markersValue)
     this.markersValue.forEach((marker) => {
       new mapboxgl.Marker()
         .setLngLat([ marker.lng, marker.lat ])
