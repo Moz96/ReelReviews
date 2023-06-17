@@ -5,16 +5,26 @@
   var cloudinary_video_player = cloudinary.videoPlayer("post_<%= post.id %>_video",{
     cloud_name: 'dwang9o22',
     fluid: true,
-    controls: true,
     muted: true,
+    showLogo: false,
+    controls: true,
     controlBar: {
-      volumePanel: false,
-      fullscreenToggle: false
+      playToggle: false,
+      volumeMenuButton: false,
+      fullscreenToggle: false,
+      currentTimeDisplay: false,
+      timeDivider: false,
+      durationDisplay: false,
+      remainingTimeDisplay: false,
+      progressControl: true
     },
     hideContextMenu: true,
     autoplayMode: 'on-scroll',
     autoplay: true,
-    loop: true
+    loop: true,
+
+    // To prevent fullscreen on iOS
+    playsinline: true
   });
 
   cloudinary_video_player.source("<%= post.video_public_id %>");
