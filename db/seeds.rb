@@ -75,6 +75,7 @@ users = User.all
     progress_bar.title = colorize(' Uploading Video...', yellow)
 
     video_path = "app/assets/videos/place_#{j + 1}_video_#{k + 1}.mp4"
+    
     cloudinary_response = Cloudinary::Uploader.upload(video_path, resource_type: 'video')
 
     post.video_url = cloudinary_response['secure_url']

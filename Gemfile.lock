@@ -107,6 +107,7 @@ GEM
     erubi (1.12.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
+    geocoder (1.8.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
     http-accept (1.7.0)
@@ -260,6 +261,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   faker
+  geocoder
   jbuilder
   jsbundling-rails
   pg (~> 1.1)
