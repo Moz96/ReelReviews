@@ -4,17 +4,20 @@
     <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css' %>
     <%= stylesheet_link_tag 'favourites', media: 'all' %>
     
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
-    <the-script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></the-script>
+    <%= stylesheet_link_tag 'https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' %>
+    <%= javascript_include_tag 'https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js' %>
 
     <title>ReelReviews</title>
-    
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+    <%= stylesheet_link_tag "https://unpkg.com/cloudinary-video-player@1.9.9/dist/cld-video-player.light.min.css" %>
+    <%= javascript_include_tag "https://unpkg.com/cloudinary-video-player@1.9.9/dist/cld-video-player.light.min.js" %>
   </head>
 
   <body>

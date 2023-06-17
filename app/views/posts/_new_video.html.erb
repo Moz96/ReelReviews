@@ -1,0 +1,38 @@
+<style>
+  #videoContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    z-index: -1; /* Set a lower z-index value for the video container */
+  }
+
+  #videoElement {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .record-video-buttons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1; /* Set a higher z-index value for the buttons */
+  }
+</style>
+
+<div id="videoContainer">
+  <video id="videoElement" data-record-video-target="videoElement" autoplay muted></video>
+</div>
+
+<div class="record-video-buttons">
+  <button data-action="click->record-video#start" data-target="record-video.startButton">Start</button>
+  <button data-action="click->record-video#stop" data-target="record-video.stopButton">Stop</button>
+  <button data-action="click->record-video#toggleFlag" data-target="record-video.videoElement">Switch Camera</button>
+</div>

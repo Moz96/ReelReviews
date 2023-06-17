@@ -2,15 +2,19 @@ class PlacesController < ApplicationController
   before_action :set_place, only: [:show]
 
   def index
-    @places = Place.includes(:posts).all
     @categories = ['Popular', 'Culture', 'Restaurants', 'Bars', 'Outdoors', 'Late Night', 'Cafés', 'Fitness']
-    @places = if params[:category]
-                Place.where(category: params[:category])
-              else
-                Place.where(category: 'Fitness')
-              end 
-  end
 
+    # Sorts places by number of likes. The - before place.farouvites denotes descending order.
+    popular_places = Place.includes(:favourites).sort_by { |place| -place.favourites.size }
+
+    @places = if params[:category] == 'Popular'
+                popular_places
+              elsif params[:category]
+                Place.where(category: params[:category]).includes(:posts).all
+              else
+                popular_places
+              end
+  end
 
   def map
     @markers = Place.all.geocoded.map do |place|
@@ -18,8 +22,7 @@ class PlacesController < ApplicationController
         lat: place.latitude,
         lng: place.longitude
       }
-    end
-  end
+   end
 
   def new
     @place = Place.new
