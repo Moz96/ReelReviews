@@ -8,7 +8,17 @@ class PlacesController < ApplicationController
                 Place.where(category: params[:category])
               else
                 Place.where(category: 'Fitness')
-              end
+              end 
+  end
+
+
+  def map
+    @markers = Place.all.geocoded.map do |place|
+      {
+        lat: place.latitude,
+        lng: place.longitude
+      }
+    end
   end
 
   def new

@@ -38,7 +38,7 @@ users = User.all
   progress_bar.title = colorize(" Creating Place #{j + 1} of 5", yellow)
   place = Place.create(
     name: "Place #{j + 1}",
-    address: "Adress #{j + 1}",
+    address: "Abbey Road #{j + 1}",
     description: "Description #{j + 1}",
     category: case j
               when 0
