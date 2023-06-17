@@ -5,7 +5,6 @@ class FavouritesController < ApplicationController
     @places = current_user.favourites.map(&:place)
   end
 
-
   def create
     place = Place.find(params[:place_id])
     favourite = Favourite.find_by(place_id: place.id) 
