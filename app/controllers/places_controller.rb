@@ -2,12 +2,17 @@ class PlacesController < ApplicationController
   before_action :set_place, only: [:show]
 
   def index
-    @places = Place.includes(:posts).all
     @categories = ['Popular', 'Culture', 'Restaurants', 'Bars', 'Outdoors', 'Late Night', 'Cafés', 'Fitness']
-    @places = if params[:category]
-                Place.where(category: params[:category])
+
+    # Sorts places by number of likes. The - before place.farouvites denotes descending order.
+    popular_places = Place.includes(:favourites).sort_by { |place| -place.favourites.size }
+
+    @places = if params[:category] == 'Popular'
+                popular_places
+              elsif params[:category]
+                Place.where(category: params[:category]).includes(:posts).all
               else
-                Place.where(category: 'Fitness')
+                popular_places
               end
   end
 
