@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # resources :posts do
   #   post 'videos', to: 'posts#create_video', on: :collection
   # end
+  resources :posts
   resources :places, only: [:index, :create, :show] do
     resources :posts, only: [:index, :new, :create] do
       collection do

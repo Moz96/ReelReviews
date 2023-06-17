@@ -10,6 +10,7 @@ export default class extends Controller {
     console.log('Record Video controller connected');
   }
 
+
   start() {
     let cameraMode = this.isFrontFacing ? 'environment' : 'user'
     console.log("Start called with camera mode: " + cameraMode)
