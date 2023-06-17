@@ -27,7 +27,7 @@ export default class extends Controller {
       })
       .then(() => this.startRecording(this.videoElementTarget.captureStream()))
       .then((recordedChunks) => {
-        const recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
+        const recordedBlob = new Blob(recordedChunks, { format: 'mp4' });
         this.uploadToCloudinary(recordedBlob);
       });
   }
