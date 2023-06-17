@@ -1,9 +1,20 @@
-<%= cl_video_tag(
-  post.video_url,
-  class: "video",
-  autoplay: true,
-  muted: true,
-  loop: true,
-  controls: true,
-  fallback_content: "Your browser does not support HTML5 video tags."
-) %>
+<video id ="post_<%= post.id %>_video" class="video cld-video-player"></video>
+
+
+<script>
+  var cloudinary_video_player = cloudinary.videoPlayer("post_<%= post.id %>_video",{
+    cloud_name: 'dwang9o22',
+    fluid: true,
+    controls: true,
+    muted: true,
+    controlBar: {
+      volumePanel: false,
+      fullscreenToggle: false
+    },
+    hideContextMenu: true,
+    autoplay: true,
+    loop: true
+  });
+
+  cloudinary_video_player.source("<%= post.video_public_id %>");
+</script>

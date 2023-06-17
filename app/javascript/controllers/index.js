@@ -12,3 +12,6 @@ application.register("place", PlaceController)
 
 import RecordVideoController from "./record_video_controller"
 application.register("record-video", RecordVideoController)
+
+import VideoController from "./video_controller"
+application.register("video", VideoController)
