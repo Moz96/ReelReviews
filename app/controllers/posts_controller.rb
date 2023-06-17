@@ -23,16 +23,19 @@ class PostsController < ApplicationController
   # end
 
   def create
-    @post = @place.posts.build(post_params)
+    puts post_params
+    # @post = @place.posts.build(post_params)
+    @post = Post.new(post_params)
+    @post.place_id = params[:place_id]
+    @post.video_url = post_params['video_url']
     @post.user = current_user
 
-    if @post.save
+    if @post.save!
       redirect_to @place, notice: 'Post created successfully.'
     else
       render :new
     end
   end
-
 
   def show
     @comments = @post.comments

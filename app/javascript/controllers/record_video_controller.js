@@ -159,7 +159,7 @@ export default class extends Controller {
     const place_id = this.element.dataset.placeId;
     const form = this.element.querySelector("form");
     const formData = new FormData(form);
-
+   console.log(formData)
     Rails.ajax({
       url: `/places/${place_id}/posts`,
       type: "post",
