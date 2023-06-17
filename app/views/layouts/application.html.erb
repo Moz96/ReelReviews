@@ -6,7 +6,6 @@
     
     <%= stylesheet_link_tag 'https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' %>
     <%= javascript_include_tag 'https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js' %>
-
     <title>ReelReviews</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,5 +21,6 @@
 
   <body>
     <%= yield %>
+      <%= render partial: 'layouts/navbar'%>
   </body>
 </html>

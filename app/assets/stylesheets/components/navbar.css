@@ -1,0 +1,21 @@
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.nav-item {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-item.active {
+  color: #000;
+}

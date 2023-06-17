@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'places#index'
 
+  # resources :posts do
+  #   post 'videos', to: 'posts#create_video', on: :collection
+  # end
+
+
 
 
   resources :places, only: [:index, :create, :show] do
