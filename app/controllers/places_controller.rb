@@ -17,13 +17,15 @@ class PlacesController < ApplicationController
   end
 
   def map
-    @markers = Place.all.geocoded.map do |place|
+    @places = Place.all
+    @markers = @places.geocoded.map do |place|
       {
         lat: place.latitude,
-        lng: place.longitude
+        lng: place.longitude,
+        info_window_html: render_to_string(partial: "places/info_window",  locals: {place: place})
       }
-    end 
-   end
+    end
+  end  
 
   def new
     @place = Place.new
