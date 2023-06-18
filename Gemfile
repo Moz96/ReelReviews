@@ -19,6 +19,8 @@ gem "devise"
 
 gem 'cloudinary'
 
+gem "geocoder"
+
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
 
