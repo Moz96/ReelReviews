@@ -3,10 +3,10 @@
 <script>
   var cloudinary_video_player = cloudinary.videoPlayer("post_<%= post.id %>_video",{
     cloud_name: 'dwang9o22',
-    fluid: true,
+    fluid: false,
     muted: true,
     showLogo: false,
-    controls: true,
+    controls: false,
     controlBar: {
       playToggle: false,
       volumeMenuButton: false,
@@ -18,7 +18,6 @@
       progressControl: true
     },
     hideContextMenu: true,
-    autoplayMode: 'on-scroll',
     autoplay: true,
     loop: true,
 
@@ -26,5 +25,7 @@
     playsinline: true
   });
 
-  cloudinary_video_player.source("<%= post.video_public_id %>");
+  // Crop video to fill screen (well, the place container)
+  cloudinary_video_player.source("<%= post.video_public_id %>", { transformation: { width: document.querySelector('.place').clientWidth, height: document.querySelector('.place').clientHeight, crop: 'fill' }});
+
 </script>

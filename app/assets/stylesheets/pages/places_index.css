@@ -19,13 +19,13 @@ html, body {
 
 .place {
   position: relative;
-  min-height: 100dvh;
+  scroll-snap-align: start;
 }
 
 .content-info {
   padding-left: 0 !important;
   padding-right: 0 !important;
-  z-index: 9999;
+  z-index: 3;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -39,7 +39,7 @@ html, body {
 }
 
 .content-info-background {
-  z-index: 9999;
+  z-index: 2;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
 }
 
@@ -53,7 +53,7 @@ a {
 }
 
 .video {
-  height: 100dvh;
+  height: calc(100dvh - 39px);
   width: 100vw;
   ;
 }
