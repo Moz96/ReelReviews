@@ -59,7 +59,18 @@ end
   puts "Creating Place #{current_place} of 5"
   place = Place.new(
     name: "Place #{current_place}",
-    address: "Adress #{current_place}",
+    address: case current_place
+             when 1
+               'Barbican Centre, Silk St, Barbican, London, EC2Y 8DS'
+             when 2
+               'Nightjar, 129 City Rd, London, EC1V 1JB'
+             when 3
+               '58 Old St, London, EC1V 9AJ'
+             when 4
+               'Fisherman\'s Bastion, Budapest, 1014, Hungary'
+             when 5
+               'Marina Bay Sands Singapore, 10 Bayfront Ave, Singapore, 018956'
+             end,
     description: "Description #{current_place}",
     category: case current_place
               when 1
