@@ -6,19 +6,10 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+# Cloudinary::Uploader.upload("app/assets/images/placeimage1.jpg", options = { asset_folder: "seed/Place 1 - Culture" })
+# puts "Uploaded"
+
 require 'faker'
-require 'ruby-progressbar'
-
-def colorize(text, color_code)
-  "\e[#{color_code}m#{text}\e[0m"
-end
-
-green = 32
-yellow = 33
-blue = 34
-
-total_steps = 5 + (5 * 3)  # 5 users, 5 places, and 3 posts per place
-progress_bar = ProgressBar.create(title: colorize(' Initializing', blue), total: total_steps, format: '%t%B|%c/%C')
 
 5.times do |i|
   User.create(
@@ -26,63 +17,67 @@ progress_bar = ProgressBar.create(title: colorize(' Initializing', blue), total:
     username: Faker::Internet.username,
     password: 'password'
   )
-  progress_bar.title = colorize(" Created User #{i + 1}", yellow)
-  progress_bar.increment
+  puts "Created User #{i + 1}"
 end
 
-progress_bar.title = colorize(' Created All Users', green)
+puts 'Created All Users'
 
 users = User.all
 
+def list_cloudinary_images(category, current_place)
+  Cloudinary::Api.resources(
+    type: :upload,
+    prefix: "seed/Place #{current_place} - #{category}/"
+  )['resources']
+end
+
+def list_cloudinary_videos(category, current_place)
+  Cloudinary::Api.resources(
+    resource_type: :video,
+    type: :upload,
+    prefix: "seed/Place #{current_place} - #{category}/"
+  )['resources']
+end
+
+
+def add_posts(place, current_place, users)
+  videos = list_cloudinary_videos(place.category, current_place)
+  videos.each_with_index do |video, k|
+    Post.create(
+      user_id: users.sample.id,
+      place_id: place.id,
+      place_rating: rand(1..5),
+      video_url: video['url'],
+      video_public_id: video['public_id']
+    )
+    puts "Saved Post #{k + 1} of #{videos.size} to Place #{current_place}"
+  end
+end
+
 5.times do |j|
-  progress_bar.title = colorize(" Creating Place #{j + 1} of 5", yellow)
-  place = Place.create(
-    name: "Place #{j + 1}",
-    address: "Adress #{j + 1}",
-    description: "Description #{j + 1}",
-    category: case j
-              when 0
-                'Culture'
+  current_place = j + 1
+  puts "Creating Place #{current_place} of 5"
+  place = Place.new(
+    name: "Place #{current_place}",
+    address: "Adress #{current_place}",
+    description: "Description #{current_place}",
+    category: case current_place
               when 1
-                'Bars'
+                'Culture'
               when 2
                 'Bars'
               when 3
-                'Culture'
+                'Bars'
               when 4
-                'Fitness'
+                'Culture'
+              when 5
+                'Outdoors'
               end,
     url: 'https://example.com',
-    opening_hours: '10am - 5pm'
+    opening_hours: '10am - 5pm',
   )
-  progress_bar.increment
+  place.image_url = list_cloudinary_images(place.category, current_place)[0]['url']
+  place.save
 
-  progress_bar.title = colorize(" Adding Image to Place #{j + 1}", yellow)
-  place.image.attach(
-    io: File.open("app/assets/images/placeimage#{j + 1}.jpg"),
-    filename: "placeimage#{j + 1}.jpg",
-    content_type: 'image/jpeg'
-  )
-
-  3.times do |k|
-    progress_bar.title = colorize(" Adding Post #{k + 1} of 3 to Place #{j + 1}", yellow)
-    post = Post.new(
-      user_id: users.sample.id,
-      place_id: place.id,
-      place_rating: rand(1..5)
-    )
-
-    progress_bar.title = colorize(' Uploading Video...', yellow)
-
-    video_path = "app/assets/videos/place_#{j + 1}_video_#{k + 1}.mp4"
-    
-    cloudinary_response = Cloudinary::Uploader.upload(video_path, resource_type: 'video')
-
-    post.video_url = cloudinary_response['secure_url']
-    post.video_public_id = cloudinary_response['public_id']
-
-    post.save
-    progress_bar.increment
-    progress_bar.title = colorize(" Uploaded Video and Saved Post #{k + 1} of 3", green)
-  end
+  add_posts(place, current_place, users)
 end
