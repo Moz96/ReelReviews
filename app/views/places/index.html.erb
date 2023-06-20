@@ -2,10 +2,10 @@
 <div class="main-content-container">
   <div class="places-list">
     <% @places.each do |place| %>
-      <div id="place_<%= place.id %>" class="place" data-controller="place">
+      <div id="place_<%= place.id %>" class="place" data-controller="place" data-place-id="<%= place.id %>">
         <div class="posts-list">
           <% place.posts.order('created_at DESC')[0..4].each_with_index do |post, index| %>
-            <div id="post_<%= post.id %>" class="post <%= 'active' if index.zero? %>" data-place-target="post">
+            <div id="post_<%= post.id %>" class="post <%= 'active' if index.zero? %>" data-place-target="post" data-post-id="<%= post.id %>">
               <%= render partial: 'post', locals: { post: post } %>
             </div>
           <% end %>

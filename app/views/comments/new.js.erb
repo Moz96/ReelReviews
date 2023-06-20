@@ -1,0 +1,30 @@
+// Clear the existing comment form
+$('#new-comment-form').remove();
+
+// Append the new comment form
+$('#comments-container').append("<%= j(render 'comments/form', comment: @comment) %>");
+
+// Reset the form fields
+$('#comment_text').val('');
+
+// Handle form submission
+$('#new-comment-form').submit(function(event) {
+  event.preventDefault();
+
+  // Serialize the form data
+  var formData = $(this).serialize();
+
+  // Send the AJAX request
+  $.ajax({
+    type: 'POST',
+    url: $(this).attr('action'),
+    data: formData,
+    dataType: 'script',
+    success: function(response) {
+      // Handle the successful response (if needed)
+    },
+    error: function(xhr, status, error) {
+      // Handle the error response (if needed)
+    }
+  });
+});
