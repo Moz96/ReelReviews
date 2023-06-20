@@ -44,6 +44,7 @@ class PostsController < ApplicationController
   def next_batch
     last_post_id = params[:after_post_id]
     @posts = Post.where('id > ? AND place_id = ?', last_post_id, params[:place_id]).limit(5)
+    # We specify the format as HTML because Rails searches for JSON partials by default when they are rendered via AJAX.
     render partial: 'next_batch', layout: false, formats: [:html]
   end
 
