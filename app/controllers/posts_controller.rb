@@ -42,10 +42,16 @@ class PostsController < ApplicationController
   end
 
   def next_batch
-    last_post_id = params[:after_id]
+    last_post_id = params[:after_post_id]
     @posts = Post.where("id > ? AND place_id = ?", last_post_id, params[:place_id]).limit(5)
     render partial: "posts/next_batch", layout: false
   end
+
+ # def next_batch
+  #  last_post_id = params[:after_id]
+   # @posts = Post.where("id > ? AND place_id = ?", last_post_id, params[:place_id]).limit(5)
+   # render partial: "posts/next_batch", layout: false
+ # end
 
   # def create_video
   #   video_file = params[:post][:video]

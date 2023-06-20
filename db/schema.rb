@@ -70,9 +70,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_152340) do
     t.time "opening_hours"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image_url"
     t.float "latitude"
     t.float "longitude"
+    t.string "image_url"
   end
 
   create_table "posts", force: :cascade do |t|

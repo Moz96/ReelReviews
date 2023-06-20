@@ -1,3 +1,7 @@
-<div>
- <% @posts.all%>
+<div class="posts-list">
+  <% current_user.posts.order('created_at DESC').each_with_index do |post, index| %>
+    <div id="post_<%= post.id %>" class="post <%= 'active' if index.zero? %>" data-place-target="post">
+      <%= render partial: 'places/post', locals: { post: post } %>
+    </div>
+  <% end %>
 </div>

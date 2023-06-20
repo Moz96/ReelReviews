@@ -25,7 +25,7 @@ class PlacesController < ApplicationController
         info_window_html: render_to_string(partial: "places/info_window",  locals: {place: place})
       }
     end
-  end  
+  end
 
   def new
     @place = Place.new
@@ -42,7 +42,7 @@ class PlacesController < ApplicationController
   end
 
   def show
-    @posts = @place.posts
+    @posts = @place.posts.includes(:comments)
   end
 
 
