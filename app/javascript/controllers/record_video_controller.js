@@ -2,24 +2,34 @@ import { Controller } from "@hotwired/stimulus";
 import Rails from "@rails/ujs";
 
 export default class extends Controller {
-  static targets = ['startButton', 'stopButton', 'videoElement'];
+  static targets = ['startButton', 'videoElement'];
 
   static isFrontFacing = true;
+  isRecording = false;
 
   connect() {
     console.log('Record Video controller connected');
   }
 
+  toggleRecording() {
+    if (this.isRecording) {
+      this.stop();
+    } else {
+      this.start();
+    }
+  }
 
   start() {
-    let cameraMode = this.isFrontFacing ? 'environment' : 'user'
-    console.log("Start called with camera mode: " + cameraMode)
-    navigator.mediaDevices.getUserMedia({ video: {
-      facingMode: {
-        exact: cameraMode
-      }
-    },
-    audio: true})
+    let cameraMode = this.isFrontFacing ? 'environment' : 'user';
+    console.log("Start called with camera mode: " + cameraMode);
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: {
+          exact: cameraMode
+        }
+      },
+      audio: true
+    })
       .then((stream) => {
         this.videoElementTarget.srcObject = stream;
         this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
@@ -30,13 +40,22 @@ export default class extends Controller {
       .then((recordedChunks) => {
         const recordedBlob = new Blob(recordedChunks, { format: 'mp4' });
         this.uploadToCloudinary(recordedBlob);
+      })
+      .catch((error) => {
+        console.error("Error starting recording:", error);
       });
   }
 
-  toggleFlag(){
-    console.log("isFrontFacing before toggle" + this.isFrontFacing)
+  stop() {
+    this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
+    this.isRecording = false;
+    console.log("Recording stopped");
+  }
+
+  toggleFlag() {
+    console.log("isFrontFacing before toggle: " + this.isFrontFacing);
     this.isFrontFacing = !this.isFrontFacing;
-    console.log("isFrontFacing after toggle" + this.isFrontFacing)
+    console.log("isFrontFacing after toggle: " + this.isFrontFacing);
     this.start();
   }
 
@@ -53,7 +72,7 @@ export default class extends Controller {
     });
 
     const stopRecording = () => {
-      return new Promise((resolve) => this.stopButtonTarget.addEventListener('click', resolve));
+      return new Promise((resolve) => this.startButtonTarget.addEventListener('click', resolve));
     };
 
     const recorded = stopRecording().then(() => {
@@ -64,12 +83,6 @@ export default class extends Controller {
     });
 
     return Promise.all([stopped, recorded]).then(() => data);
-  }
-
-
-
-  stop() {
-    this.videoElementTarget.srcObject.getTracks().forEach((track) => track.stop());
   }
 
   // switchCamera() {
