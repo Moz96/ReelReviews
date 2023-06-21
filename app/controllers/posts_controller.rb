@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_place, only: [:new, :create]
+  # before_action :set_place, only: [:new, :create]
   before_action :set_post, only: [:show]
 
   def index
@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = @place.posts.build
+    @post = Post.new
   end
 
   # def create
@@ -22,16 +22,21 @@ class PostsController < ApplicationController
   #   end
   # end
 
+  def auto_complete
+
+  end
+
   def create
-    puts post_params
+    @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
+    @places = @client.spots_by_query('Pizza near Miami Florida')
+    raise
     # @post = @place.posts.build(post_params)
     @post = Post.new(post_params)
     @post.place_id = params[:place_id]
     @post.video_url = post_params['video_url']
     @post.user = current_user
-
     if @post.save!
-      redirect_to @place, notice: 'Post created successfully.'
+      redirect_to @Place, notice: 'Post created successfully.'
     else
       render :new
     end
@@ -65,13 +70,13 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:place_id, :place_rating, :video_url, :video_public_id)
+    params.require(:post).permit(:place_id, :place_rating, :video_url, :video_public_id, place_attributes: [:address])
   end
 
 
-  def set_place
-    @place = Place.find(params[:place_id])
-  end
+  # def set_place
+  #   @place = Place.find(params[:place_id])
+  # end
 
   def set_post
     @post = Post.find(params[:id])
