@@ -1,9 +1,11 @@
 <a href="<%= place_path(place) %>" style="margin: 0;">
-  <div class="popup-content">
+  <div class="mapboxgl-popup-content">
     <%= image_tag(place.image_url, style: "width: 100%; height: auto;") %>
+    <div class="mapboxgl-popup-content-text>
     <h3 class="popup-title"><%= place.name %></h3>
     <p class="popup-address"><%= place.address %></p>
     <p class="popup-description"><%= place.description %></p>
+    </div>
     <!-- Add more information about the place as needed -->
   </div>
 </a>
