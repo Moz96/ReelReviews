@@ -170,7 +170,7 @@ export default class extends Controller {
   }
 
   savePost() {
-    const place_id = this.element.dataset.placeId;
+    const place_id = 2;
     const form = this.element.querySelector("form");
     const formData = new FormData(form);
    console.log(formData)

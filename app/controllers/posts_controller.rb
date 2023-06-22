@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  before_action :set_place, only: [:new, :create]
   before_action :set_post, only: [:show]
 
   def index
@@ -7,7 +6,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = @place.posts.build
+    @post = Post.new
   end
 
   # def create
@@ -43,8 +42,9 @@ class PostsController < ApplicationController
 
   def next_batch
     last_post_id = params[:after_post_id]
-    @posts = Post.where("id > ? AND place_id = ?", last_post_id, params[:place_id]).limit(5)
-    render partial: "posts/next_batch", layout: false
+    @posts = Post.where('id > ? AND place_id = ?', last_post_id, params[:place_id]).limit(5)
+    # We specify the format as HTML because Rails searches for JSON partials by default when they are rendered via AJAX.
+    render partial: 'next_batch', layout: false, formats: [:html]
   end
 
  # def next_batch
