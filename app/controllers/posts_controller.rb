@@ -23,15 +23,15 @@ class PostsController < ApplicationController
   # end
 
   def create
+    @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
+    @places = @client.spots_by_query('Pizza near Miami Florida')
     puts post_params
-    # @post = @place.posts.build(post_params)
     @post = Post.new(post_params)
     @post.place_id = params[:place_id]
     @post.video_url = post_params['video_url']
     @post.user = current_user
-
-    if @post.save!
-      redirect_to @place, notice: 'Post created successfully.'
+    if @post.save
+      redirect_to @post.place, notice: 'Post created successfully.'
     else
       render :new
     end
