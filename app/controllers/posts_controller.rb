@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  before_action :set_place, only: [:new, :create]
   before_action :set_post, only: [:show]
 
   def index
@@ -7,7 +6,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = @place.posts.build
+    @post = Post.new
   end
 
   # def create
