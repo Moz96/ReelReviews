@@ -10,18 +10,6 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
-  # def create
-  #   @post = @place.posts.build(post_params)
-  #   @post.user = current_user
-
-  #   if @post.save
-  #     create_video if params.dig(:post, :video).present?
-  #     redirect_to @place, notice: 'Post created successfully.'
-  #   else
-  #     render :new
-  #   end
-  # end
-
   def create
     client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
     google_place_id = params[:google_place_id]
@@ -39,8 +27,7 @@ class PostsController < ApplicationController
       opening_hours: '10am - 6pm',
       google_place_id: google_place_id
     )
-    # Place.where('google_place_id = ?', params[:google_place_id])
-    # @post = @place.posts.build(post_params)
+
     @post = Post.new(
       user_id: current_user.id,
       place_id: @place.id,
@@ -66,30 +53,11 @@ class PostsController < ApplicationController
     render partial: 'next_batch', layout: false, formats: [:html]
   end
 
- # def next_batch
-  #  last_post_id = params[:after_id]
-   # @posts = Post.where("id > ? AND place_id = ?", last_post_id, params[:place_id]).limit(5)
-   # render partial: "posts/next_batch", layout: false
- # end
-
-  # def create_video
-  #   video_file = params[:post][:video]
-  #   cloudinary_response = Cloudinary::Uploader.upload(video_file.tempfile)
-  #   @post.video_url = cloudinary_response['secure_url']
-  #   @post.video_public_id = cloudinary_response['public_id']
-  #   @post.save
-  # end
-
   private
 
   def post_params
     params.require(:post).permit(:google_place_id, :place_rating, :video_url, :video_public_id)
   end
-
-
-  # def set_place
-  #   @place = Place.find(params[:place_id])
-  # end
 
   def set_post
     @post = Post.find(params[:id])

@@ -53,10 +53,8 @@ export default class extends Controller {
           console.error("Recorded Blob is empty. Recording failed.");
           return;
         }
-
-        this.recordedBlob = recordedBlob;
         this.enableForm();
-        this.uploadToCloudinary(this.recordedBlob);
+        this.uploadToCloudinary(recordedBlob);
       };
     })
     .catch((error) => {
@@ -66,6 +64,7 @@ export default class extends Controller {
 
   enableForm () {
     this.formTarget.style.display = 'block';
+    this.submit_button = document.getElementById('submit_button');
   }
 
   stop() {
@@ -107,7 +106,8 @@ export default class extends Controller {
           // Store the video URL and the public_id in hidden fields
           document.querySelector('#hidden_video_url').value = data.secure_url;
           document.querySelector('#hidden_video_public_id').value = data.public_id;
-          console.log(data.secure_url);
+          this.submit_button.value = 'Post Reel Review';
+          this.submit_button.disabled = false;
         }
       })
       .catch((error) => console.error('Error uploading video:', error));

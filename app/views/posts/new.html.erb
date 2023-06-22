@@ -2,14 +2,16 @@
   <%= form_with(model: @post, local: true, id: 'form', data: { target: 'record-video.form', action: 'submit->record-video#savePost' }) do |f| %>
     <div class="form-inputs">
       <%= f.label :place_rating %>
-      <%= f.number_field :place_rating %>
+      <%= f.number_field :place_rating, required: true %>
 
       <%= f.label "Search for a place" %>
-      <%= text_field_tag "google_place_search", '', id: "autocomplete" %>
+      <%= text_field_tag "google_place_search", '', id: "autocomplete", required: true %>
     </div>
     <ul id="results"></ul>
 
-    <%= f.submit "Create Post" %>
+
+    <%# Show uploading text while response is being processed %>
+    <%= f.submit "Uploading...", id: 'submit_button', disabled: true %>
 
     <%= f.hidden_field :video_url, id: 'hidden_video_url' %>
     <%= f.hidden_field :video_public_id, id: 'hidden_video_public_id' %>
