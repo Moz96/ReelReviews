@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   # before_action :set_place, only: [:new, :create]
   before_action :set_post, only: [:show]
+  skip_before_action :authenticate_user!, only: :show
 
   def index
     @posts = Post.all
@@ -36,7 +37,7 @@ class PostsController < ApplicationController
       place_rating: post_params['place_rating']
     )
     if @post.save!
-      redirect_to @Place, notice: 'Post created successfully.'
+      redirect_to places_path, notice: 'Post created successfully.'
     else
       render :new
     end

@@ -1,5 +1,7 @@
 class PlacesController < ApplicationController
   before_action :set_place, only: [:show]
+  skip_before_action :authenticate_user!, only: %i[index map show]
+
 
   def index
     @categories = ['Popular', 'Culture', 'Restaurants', 'Bars', 'Outdoors', 'Late Night', 'Cafés', 'Fitness']
