@@ -1,8 +1,9 @@
-<%# wrap whole thing in a link to tag %>
-
-<div class="popup-content">
-  <h3><%= place.name %></h3>
-  <p><%= place.address %></p>
-  <p><%= place.description %></p>
-  <!-- Add more information about the place as needed -->
-</div>
+<a href="<%= place_path(place) %>" style="margin: 0;">
+  <div class="popup-content">
+    <%= image_tag(place.image_url, style: "width: 100%; height: auto;") %>
+    <h3 class="popup-title"><%= place.name %></h3>
+    <p class="popup-address"><%= place.address %></p>
+    <p class="popup-description"><%= place.description %></p>
+    <!-- Add more information about the place as needed -->
+  </div>
+</a>
