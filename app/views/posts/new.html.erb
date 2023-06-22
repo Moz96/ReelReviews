@@ -13,7 +13,7 @@
 
     <%= f.hidden_field :video_url, id: 'hidden_video_url' %>
     <%= f.hidden_field :video_public_id, id: 'hidden_video_public_id' %>
-    <%= hidden_field_tag "google_place_details" %>
+    <%= hidden_field_tag "google_place_id" %>
 
   <% end %>
   <%= render "new_video" %>
@@ -49,7 +49,7 @@
         window.alert("No details available for input: '" + place.name + "'");
         return;
       }
-      document.getElementById('google_place_details').value = place.details;
+      document.getElementById('google_place_id').value = place.place_id;
     });
   }
 

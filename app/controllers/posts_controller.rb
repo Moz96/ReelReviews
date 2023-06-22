@@ -22,20 +22,32 @@ class PostsController < ApplicationController
   #   end
   # end
 
-
   def create
-    @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
-    @client.spot(params[:google_place_id])
+    client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
+    google_place_id = params[:google_place_id]
+    place_details = client.spot(google_place_id)
+    place_image_url = place_details.photos[0].fetch_url(800)
 
     @place = Place.create(
-
+      name: place_details.name,
+      address: place_details.formatted_address,
+      url: place_details.url,
+      latitude: place_details.lat,
+      longitude: place_details.lng,
+      image_url: place_image_url,
+      category: place_details.types[0],
+      opening_hours: '10am - 6pm',
+      google_place_id: google_place_id
     )
     # Place.where('google_place_id = ?', params[:google_place_id])
     # @post = @place.posts.build(post_params)
-    @post = Post.new(post_params)
-    @post.place_id = params[:place_id]
-    @post.video_url = post_params['video_url']
-    @post.user = current_user
+    @post = Post.new(
+      user_id: current_user.id,
+      place_id: @place.id,
+      video_url: post_params['video_url'],
+      video_public_id: post_params['video_public_id'],
+      place_rating: post_params['place_rating']
+    )
     if @post.save!
       redirect_to @Place, notice: 'Post created successfully.'
     else
@@ -71,7 +83,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:place_id, :place_rating, :video_url, :video_public_id, place_attributes: [:address])
+    params.require(:post).permit(:google_place_id, :place_rating, :video_url, :video_public_id)
   end
 
 
