@@ -1,9 +1,6 @@
 <div data-controller="record-video">
-  <%= form_with(model: @post, local: true) do |f| %>
+  <%= form_with(model: @post, local: true, id: 'form', data: { target: 'record-video.form', action: 'submit->record-video#savePost' }) do |f| %>
     <div class="form-inputs">
-      <%= f.label :video %>
-      <%= f.file_field :video %>
-
       <%= f.label :place_rating %>
       <%= f.number_field :place_rating %>
 
@@ -16,10 +13,17 @@
 
     <%= f.hidden_field :video_url, id: 'hidden_video_url' %>
     <%= f.hidden_field :video_public_id, id: 'hidden_video_public_id' %>
+    <%= hidden_field_tag "google_place_details" %>
 
   <% end %>
   <%= render "new_video" %>
 </div>
+
+<style>
+  form {
+    display: none;
+  }
+</style>
 
 <script>
   (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
@@ -45,7 +49,7 @@
         window.alert("No details available for input: '" + place.name + "'");
         return;
       }
-      console.log(place);
+      document.getElementById('google_place_details').value = place.details;
     });
   }
 

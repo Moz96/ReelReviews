@@ -22,14 +22,15 @@ class PostsController < ApplicationController
   #   end
   # end
 
-  def auto_complete
-
-  end
 
   def create
     @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
-    @places = @client.spots_by_query('Pizza near Miami Florida')
-    raise
+    @client.spot(params[:google_place_id])
+
+    @place = Place.create(
+
+    )
+    # Place.where('google_place_id = ?', params[:google_place_id])
     # @post = @place.posts.build(post_params)
     @post = Post.new(post_params)
     @post.place_id = params[:place_id]
