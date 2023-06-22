@@ -21,6 +21,7 @@ body::-webkit-scrollbar {
  /* Hide scrollbar for Firefox */
 html {
   scrollbar-width: none;
+  scroll-snap-type: y mandatory;
 }
 
 /* Hide scrollbar for IE and Edge */
