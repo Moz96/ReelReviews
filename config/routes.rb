@@ -2,9 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'places#index'
 
-  resources :posts, only: [:index, :new, :create]
-
-  # get 'new-post', to: "posts#new"
+  resources :posts, only: [:index, :create, :new]
 
   resources :places, only: [:index, :create, :show] do
     resources :posts, only: [:index, :show] do

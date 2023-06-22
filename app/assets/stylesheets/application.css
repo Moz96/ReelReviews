@@ -1,24 +1,9 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
-
+/* Hide scrollbars */
 body::-webkit-scrollbar {
   display: none;
 }
 
- /* Hide scrollbar for Firefox */
+/* Hide scrollbar for Firefox */
 html {
   scrollbar-width: none;
   scroll-snap-type: y mandatory;
@@ -29,19 +14,62 @@ body {
   -ms-overflow-style: none;
 }
 
+/* General styles */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #0D003F;
   color: white;
 }
 
-.popup-content {
-  width: 200px;
-  padding: 10px;
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+.mapboxgl-popup-content {
+  width: 100%;
+  padding: 0px;
   background-color: #fff;
   color: #000;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  border: 1px solid black;
 }
+
+.mapboxgl-popup-content h3 {
+  background: #91c949;
+  color: #fff;
+  margin: 0;
+  padding: 0px;
+  border-radius: 3px 3px 0 0;
+  font-weight: 700;
+  margin-top: -15px;
+}
+
+.mapboxgl-popup-content h4 {
+  margin: 0;
+  padding: 0px;
+  font-weight: 400;
+}
+
+.mapboxgl-popup-content div {
+  padding: 0px;
+}
+
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+  margin-top: 15px;
+}
+
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
+  border-bottom-color: #91c949;
+}
+
+
 
 .popup-title {
   font-size: 18px;
@@ -49,10 +77,30 @@ body {
   margin-bottom: 5px;
 }
 
-.popup-address {
-  margin-bottom: 5px;
-}
-
+.popup-address,
 .popup-description {
   margin-bottom: 10px;
+}
+
+.popup-address {
+  color: #666;
+}
+
+.popup-link {
+  display: inline-block;
+  color: #91c949;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.popup-link:hover {
+  text-decoration: underline;
+}
+
+#map {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
 }
