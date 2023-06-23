@@ -18,18 +18,10 @@
           <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
             <%= link_to favourites_path(place_id: place.id), method: :post, data: { turbo: true }, class: "favourite" do %>
               <i class="fas fa-heart" title="Favourite"></i>
-              <% if place.posts.exists? %>
-                <% post = place.posts.first %>
-                <span class="favorite-count"><%= post.favorites.count %></span>
-              <% end %>
             <% end %>
           <% else %>
             <%= link_to favourites_path(place_id: place.id), method: :delete, data: { turbo: true }, class: "favourite" do %>
               <i class="fas fa-heart" title="Unfavourite"></i>
-              <% if place.posts.exists? %>
-                <% post = place.posts.first %>
-                <span class="favorite-count"><%= post.favorites.count %></span>
-              <% end %>
             <% end %>
           <% end %>
 
