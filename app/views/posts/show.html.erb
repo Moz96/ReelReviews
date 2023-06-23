@@ -1,0 +1,9 @@
+<%= render partial: 'comments/form', locals: { post: @post } %>
+
+<div class="comments">
+  <% @post.comments.each do |comment| %>
+    <div class="comment">
+      <p><strong><%= comment.user.username %>:</strong> <%= comment.content %></p>
+    </div>
+  <% end %>
+</div>
