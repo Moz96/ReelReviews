@@ -1,9 +1,37 @@
-<%= render partial: 'comments/form', locals: { post: @post } %>
+<div class="posts">
+  <% current_user.posts.each do |post| %>
+    <div class="post">
+      <p><strong><%= post.user.username %>:</strong> <%= post.content %></p>
+      <video id="post_<%= post.id %>_video" class="video cld-video-player"></video>
 
-<div class="comments">
-  <% @post.comments.each do |comment| %>
-    <div class="comment">
-      <p><strong><%= comment.user.username %>:</strong> <%= comment.content %></p>
+      <script>
+        var cloudinary_video_player_<%= post.id %> = cloudinary.videoPlayer("post_<%= post.id %>_video",{
+          cloud_name: 'dwang9o22',
+          fluid: false,
+          muted: true,
+          showLogo: false,
+          controls: false,
+          controlBar: {
+            playToggle: false,
+            volumeMenuButton: false,
+            fullscreenToggle: false,
+            currentTimeDisplay: false,
+            timeDivider: false,
+            durationDisplay: false,
+            remainingTimeDisplay: false,
+            progressControl: true
+          },
+          hideContextMenu: true,
+          autoplay: true,
+          loop: true,
+
+          // To prevent fullscreen on iOS
+          playsinline: true
+        });
+
+        // Crop video to fill screen (well, the place container)
+        cloudinary_video_player_<%= post.id %>.source("<%= post.video_public_id %>", { transformation: { width: document.querySelector('.place').clientWidth, height: document.querySelector('.place').clientHeight, crop: 'fill' }});
+      </script>
     </div>
   <% end %>
 </div>

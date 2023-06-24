@@ -81,3 +81,12 @@ a {
 .next {
   right: 1rem;
 }
+
+.heart-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: red;
+  /* Add any additional styles you want */
+}
