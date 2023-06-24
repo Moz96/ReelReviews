@@ -17,18 +17,22 @@ export default class extends Controller {
       zoom: 10, // Adjust the zoom level as desired
     });
   
-    this.addMarkersToMap();
-
+    this.addMarkersToMap()
+    this.#fitMapToMarkers()
   }  
 
   addMarkersToMap() {
-    console.log(this.markersValue)
     this.markersValue.forEach((marker) => {
       const popup = new mapboxgl.Popup().setHTML(marker.info_window_html) // Add this
       new mapboxgl.Marker()
-        .setLngLat([ marker.lng, marker.lat ])
-        .setPopup(popup) // Add this
-        .addTo(this.map)
+      .setLngLat([ marker.lng, marker.lat ])
+      .setPopup(popup) // Add this
+      .addTo(this.map)
     })
+  }
+  #fitMapToMarkers() {
+    const bounds = new mapboxgl.LngLatBounds()
+    this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
+    this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
   }
 }

@@ -19,5 +19,4 @@ class FavouritesController < ApplicationController
       redirect_to favourites_path
     end
   end
-
 end

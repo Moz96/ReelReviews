@@ -53,6 +53,18 @@ class PlacesController < ApplicationController
 
   def show
     @posts = @place.posts.includes(:comments)
+    if params[:id].present?
+      @places = Place.where(id: params[:id])
+    else
+      @places = Place.all
+    end
+    @markers = @places.geocoded.map do |place|
+      {
+        lat: place.latitude,
+        lng: place.longitude,
+        info_window_html: render_to_string(partial: "places/info_window", locals: { place: place })
+      }
+    end
   end
 
 
