@@ -1,13 +1,8 @@
-<%# <%= image_tag ("https://en.wikipedia.org/wiki/File:Dollarnote_siegel_hq.jpg",alt: "Placeholder Image") %>
-
-  <%# <%= link_to "Share", share_path, class: "overlay-link" %>
-  <%# <%= link_to "Like", like_path, class: "overlay-link" %>
-
- <%# <%= link_to "Like", like_path, class: "overlay-link" %>
 <div class="main-container">
-    <div class="main-image">
-      <img srcset="https://dice-media.imgix.net/attachments/2023-06-19/1610cfe8-5820-4032-ad00-686484c3bfca.jpg?rect=0%2C0%2C1000%2C1000&amp;auto=format%2Ccompress&amp;q=80&amp;w=328&amp;fit=max&amp;dpr=1 1x,https://dice-media.imgix.net/attachments/2023-06-19/1610cfe8-5820-4032-ad00-686484c3bfca.jpg?rect=0%2C0%2C1000%2C1000&amp;auto=format%2Ccompress&amp;q=40&amp;w=328&amp;fit=max&amp;dpr=2 2x" src="https://dice-media.imgix.net/attachments/2023-06-19/1610cfe8-5820-4032-ad00-686484c3bfca.jpg?rect=0%2C0%2C1000%2C1000&amp;auto=format%2Ccompress&amp;q=80&amp;w=328&amp;fit=max" alt="" width="100" height="100" class="EventDetailsImage__Image-pi5vdq-1 bKcAvC">
-    </div>
+  <div class="main-image">
+    <%= image_tag(@place.image_url) %>
+  </div>
+  <div class="details">
     <div class="name-description">
       <h1><%= @place.name %></h1>
       <p>Category: <%= @place.category %></p>
@@ -20,7 +15,12 @@
     <div class="location">
       <h2>Location</h2>
       <p>Location: <%= @place.address %></p>
-      <div id="map-container">
-      </div>
     </div>
   </div>
+  
+  <div 
+  data-map-markers-value="<%= @markers.to_json %>"
+  id="map-container" data-controller="map" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+</div>
+
+

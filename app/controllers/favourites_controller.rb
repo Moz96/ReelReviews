@@ -19,11 +19,4 @@ class FavouritesController < ApplicationController
       redirect_to place_path(place), notice: 'Place removed from favorites.'
     end
   end
-
-  def destroy
-    favourite = current_user.favourites.find(params[:id])
-    place = favourite.place
-    favourite.destroy
-    redirect_to place_path(place), notice: 'Place removed from favorites.'
-  end
 end

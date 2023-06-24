@@ -94,9 +94,9 @@ export default class extends Controller {
   uploadToCloudinary(videoBlob) {
     const formData = new FormData();
     formData.append('file', videoBlob, 'my_video');
-    formData.append('upload_preset', 'rpa47g8k');
+    formData.append('upload_preset', 'm2tzhcc6');
 
-    fetch('https://api.cloudinary.com/v1_1/dwang9o22/upload', {
+    fetch('https://api.cloudinary.com/v1_1/dfmuyxggs/upload', {
       method: 'POST',
       body: formData
     })
