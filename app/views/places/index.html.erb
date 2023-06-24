@@ -30,7 +30,7 @@
               <h2 class="place-name"><%= link_to place.name, place_path(place) %></h2>
                 <% place.posts.order('created_at DESC')[0..4].each do |post| %>
                 <%# <img src="" alt="" class="avatar"> %>
-                <p class="post-username"><%= place.user %></p>
+                <p class="post-username"> </p>
                 <p class="post-caption"></p>
               <%end%>
             </div>
