@@ -4,6 +4,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 
+    <link rel="manifest" href="<%= asset_path 'manifest' %>">
+
     <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css' %>
     <%= stylesheet_link_tag 'favourites', media: 'all' %>
 
@@ -21,6 +23,7 @@
 
     <%= stylesheet_link_tag "https://unpkg.com/cloudinary-video-player@1.9.9/dist/cld-video-player.light.min.css" %>
     <%= javascript_include_tag "https://unpkg.com/cloudinary-video-player@1.9.9/dist/cld-video-player.light.min.js" %>
+    <%= render 'layouts/ios_pwa_links' %>
   </head>
 
   <body>

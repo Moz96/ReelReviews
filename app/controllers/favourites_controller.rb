@@ -5,19 +5,25 @@ class FavouritesController < ApplicationController
 
   def create
     place = Place.find(params[:place_id])
-    favourite = Favourite.find_by(place_id: place.id)
+    favourite = current_user.favourites.find_by(place_id: place.id)
 
     if favourite.nil?
-      @favourite = Favourite.new(user_id: current_user.id, place_id: place.id)
+      @favourite = current_user.favourites.build(place: place)
       if @favourite.save
-        redirect_to favourites_path
+        redirect_to place_path(place), notice: 'Place added to favorites.'
       else
-        render :places, status: :unprocessable_entity
+        redirect_to place_path(place), alert: 'Failed to add place to favorites.'
       end
     else
       favourite.destroy
-      redirect_to favourites_path
+      redirect_to place_path(place), notice: 'Place removed from favorites.'
     end
   end
 
+  def destroy
+    favourite = current_user.favourites.find(params[:id])
+    place = favourite.place
+    favourite.destroy
+    redirect_to place_path(place), notice: 'Place removed from favorites.'
+  end
 end
