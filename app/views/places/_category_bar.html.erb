@@ -1,12 +1,19 @@
-  <div class="category-bar">
-    <ul class="category-list">
-      <% @categories.each do |category| %>
-        <li>
-          <%= link_to places_path(category: category) do %>
-          <%= image_tag "icons/categories/#{category}.svg", alt: "#{category} icon", class: "icon-category" %>
-          <p class="category-text"><%=category%></p>
+<div class="category-bar">
+  <ul class="category-list">
+    <% @categories.each do |category| %>
+      <li>
+        <% if action_name == 'map' %>
+          <%= link_to map_path(category: category), class: "category-link" do %>
+            <%= image_tag "icons/categories/#{category}.svg", alt: "#{category} icon", class: "icon-category" %>
+            <p class="category-text"><%= category %></p>
           <% end %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+        <% else %>
+          <%= link_to places_path(category: category), class: "category-link" do %>
+            <%= image_tag "icons/categories/#{category}.svg", alt: "#{category} icon", class: "icon-category" %>
+            <p class="category-text"><%= category %></p>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

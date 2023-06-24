@@ -19,16 +19,23 @@ class PlacesController < ApplicationController
   end
 
   def map
-    @places = Place.all
+    if params[:category].present?
+      @places = Place.where(category: params[:category])
+    else
+      @places = Place.all
+    end
+  
     @markers = @places.geocoded.map do |place|
       {
         lat: place.latitude,
         lng: place.longitude,
-        info_window_html: render_to_string(partial: "places/info_window",  locals: {place: place})
+        info_window_html: render_to_string(partial: "places/info_window", locals: { place: place })
       }
     end
+  
     @categories = ['Popular', 'Culture', 'Restaurants', 'Bars', 'Outdoors', 'Late Night', 'Cafés', 'Fitness']
   end
+  
 
   def new
     @place = Place.new
