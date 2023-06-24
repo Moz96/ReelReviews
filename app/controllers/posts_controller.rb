@@ -11,30 +11,42 @@ class PostsController < ApplicationController
   end
 
   def create
-    client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
-    google_place_id = params[:google_place_id]
-    place_details = client.spot(google_place_id)
-    place_image_url = place_details.photos[0].fetch_url(800)
+    # @place = Place.('google_place_id = ?', params[:google_place_id])
+    # if @place
+    #   @post = Post.new(
+    #     user_id: current_user.id,
+    #     place_id: @place.id,
+    #     video_url: post_params['video_url'],
+    #     video_public_id: post_params['video_public_id'],
+    #     place_rating: post_params['place_rating']
+    #   )
+    # else
+      client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
+      google_place_id = params[:google_place_id]
+      place_details = client.spot(google_place_id)
+      place_image_url = place_details.photos[0].fetch_url(800)
 
-    @place = Place.create(
-      name: place_details.name,
-      address: place_details.formatted_address,
-      url: place_details.url,
-      latitude: place_details.lat,
-      longitude: place_details.lng,
-      image_url: place_image_url,
-      category: place_details.types[0],
-      opening_hours: '10am - 6pm',
-      google_place_id: google_place_id
-    )
+      @place = Place.create(
+        name: place_details.name,
+        address: place_details.formatted_address,
+        url: place_details.url,
+        latitude: place_details.lat,
+        longitude: place_details.lng,
+        image_url: place_image_url,
+        category: place_details.types[0],
+        opening_hours: '10am - 6pm',
+        google_place_id: google_place_id
+      )
 
-    @post = Post.new(
-      user_id: current_user.id,
-      place_id: @place.id,
-      video_url: post_params['video_url'],
-      video_public_id: post_params['video_public_id'],
-      place_rating: post_params['place_rating']
-    )
+      @post = Post.new(
+        user_id: current_user.id,
+        place_id: @place.id,
+        video_url: post_params['video_url'],
+        video_public_id: post_params['video_public_id'],
+        place_rating: post_params['place_rating']
+      )
+    # end
+
     if @post.save!
       redirect_to places_path, notice: 'Post created successfully.'
     else

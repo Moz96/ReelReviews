@@ -1,16 +1,17 @@
 .main-container {
-  display: inline-block;
   align-self: center;
-  text-align: left;
-  border: 2px solid #ffffff;
-  border-radius: 10px;
-  border-width: 1px;
-  padding: 10px;
 }
 
+/* .main-image {
+  width: 100%;
+} */
 .main-image img {
-  max-width: 300px;
+  min-width: 100vw;
   height: 300px;
+}
+
+.details {
+  padding: 1rem;
 }
 
 .name-description h1 {
