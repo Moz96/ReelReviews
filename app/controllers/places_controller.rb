@@ -27,6 +27,7 @@ class PlacesController < ApplicationController
         info_window_html: render_to_string(partial: "places/info_window",  locals: {place: place})
       }
     end
+    @categories = ['Popular', 'Culture', 'Restaurants', 'Bars', 'Outdoors', 'Late Night', 'Cafés', 'Fitness']
   end
 
   def new

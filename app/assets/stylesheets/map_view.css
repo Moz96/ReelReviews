@@ -1,0 +1,26 @@
+.category-bar {
+    position: relative;
+    z-index: 9999; /* Adjust the value as needed */
+     background: linear-gradient(to bottom, rgba(13, 0, 63, 0.8) 0%, rgba(13, 0, 63, 0.4) 50%, rgba(13, 0, 63, 0) 100%); /* Adjust the gradient colors and opacity as needed */
+}
+  .category-list {
+    padding: 10px; /* Adjust the padding as needed */
+    border-radius: 5px; /* Adjust the border radius as needed */
+    transition: background-color 0.3s ease; /* Transition effect for background color */
+  }
+  
+  .category-list li {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  
+  .category-list li a {
+    color: white; /* Adjust the text color as needed */
+    text-decoration: none;
+    padding: 5px 10px; /* Adjust the padding as needed */
+    border-radius: 3px; /* Adjust the border radius as needed */
+    transition: background-color 0.3s ease; /* Transition effect for background color */
+  }
+  
+
+  
