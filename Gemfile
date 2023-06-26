@@ -60,7 +60,8 @@ gem "dotenv-rails", groups: [:development, :test]
 
 gem "faker"
 
-gem "ruby-progressbar"
+# OpenAI to match Google Places API categories to our smaller set of categories
+gem "ruby-openai"
 
 
 group :development, :test do
