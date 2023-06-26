@@ -24,7 +24,7 @@ def create_users
     username: 'Charlie',
     password: 'password'
   )
-  puts 'Created User Tom'
+  puts 'Created User Charlie'
 
   User.create(
     email: 'nicholas@nicholashennellfoley.com',
