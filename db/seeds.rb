@@ -21,10 +21,10 @@ def create_users
 
   User.create(
     email: 'charliemorris.96@gmail.com',
-    username: 'Charlie',
+    username: 'Moz',
     password: 'password'
   )
-  puts 'Created User Tom'
+  puts 'Created User Moz'
 
   User.create(
     email: 'nicholas@nicholashennellfoley.com',
