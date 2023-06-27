@@ -42,7 +42,28 @@
   background-color: #f2f2f2;
 }
 
-#reviews {
+.reviews {
     width: 100%;
     height: 300px;
+  }
+
+  .posts-list {
+    width: 100%;
+    height: 100%;
+  }
+
+  .post {
+    display: none;
+    text-align: center;
+  }
+
+  .place {
+    position: relative;
+    scroll-snap-align: start;
+  }
+
+  .video {
+    height: calc(100dvh - 39px);
+    width: 100vw;
+    ;
   }

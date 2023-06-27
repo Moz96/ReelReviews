@@ -16,17 +16,17 @@
       <h2>Location</h2>
       <p>Location: <%= @place.address %></p>
     </div>
-  </div>
-  <div id="map-container" data-controller="map" data-map-markers-value="<%= @markers.to_json %>" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-  </div>
-  <div id="reviews">
-    <h2>Reviews</h2>
-    <div class="post-place">
-      <% @place.posts.order('created_at DESC').each do |post| %>
-        <div id="post_<%= post.id %>" class="post" data-place-target="post" data-post-id="<%= post.id %>">
-          <%= render partial: 'post', locals: { post: post } %>
-        </div>
-      <% end %>
+    <div id="map-container" data-controller="map" data-map-markers-value="<%= @markers.to_json %>" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    </div>
+    <div class="reviews">
+      <h2>Reviews</h2>
+      <div class="places-list">
+        <% @place.posts.order('created_at DESC').each do |post| %>
+          <div id="post_<%= post.id %>" class="post" data-place-target="post" data-post-id="<%= post.id %>">
+            <%= render partial: 'post', locals: { post: post } %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
