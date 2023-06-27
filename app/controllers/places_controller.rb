@@ -58,6 +58,7 @@ class PlacesController < ApplicationController
     else
       @places = Place.all
     end
+    
     @markers = @places.geocoded.map do |place|
       {
         lat: place.latitude,
