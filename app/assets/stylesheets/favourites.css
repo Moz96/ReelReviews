@@ -3,36 +3,39 @@
 /* CSS Styles for the Favourites List */
 ul {
   list-style-type: none;
+  padding-inline-start: 10px;
+}
+
+.favourite-header {
+  padding-inline-start: 10px;
 }
 
 .favourite-item {
   display: flex;
-  align-items: center;
   margin-bottom: 10px;
 }
 
 .image-container {
-  width: 150x;
+  width: 150px;
   height: 150px;
   margin-right: 10px;
   overflow: hidden;
-}
-
-.image-container img {
-  width: 50%;
-  height: 50%;
-  object-fit: cover;
-}
-
-
-.image-container img {
-  width: 100px;
-  height: 100px;
+  background-size: cover;
+  flex-shrink: 0; /* Prevent image container from shrinking */
+  background-position: center;
+  zoom: 75%;
+  border-radius: 12px;
 }
 
 .item-details {
   display: flex;
   flex-direction: column;
+  flex-grow: 1; /* Allow item details to grow and fill remaining space */
+}
+
+.item-description {
+  align-self: center;
+  padding-top: 10px;
 }
 
 .item-header {
@@ -43,6 +46,8 @@ ul {
 
 .item-name {
   font-weight: bold;
+  font-size: 20px;
+  align-self: flex-start;
 }
 
 .favourite-icon {
