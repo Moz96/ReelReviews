@@ -1,8 +1,4 @@
-require 'openai'
-require 'net/http'
-require 'json'
-
-open_ai_client = OpenAI::Client.new(access_token: ENV['OPENAI_ACCESS_TOKEN'])
+require_relative '../lib/create_place_helper'
 
 def create_users
   User.create(
@@ -60,72 +56,22 @@ def add_posts(place, current_place, users)
   end
 end
 
-def concatenate_opening_hours(opening_hours)
-  if opening_hours
-    days = opening_hours['weekday_text']
-    concatenated_text = ''
-    days.each_with_index do |day, current_day|
-      concatenated_text += current_day == days.size - 1 ? day.to_s : "#{day}\n"
-    end
-    concatenated_text
-  else
-    'No listed regular opening hours.'
-  end
-end
-
 users = User.all
 
 # Get place folders from Cloudinary that contain videos, only dev environment
 user_folders = Cloudinary::Api.subfolders('development', options = {})['folders']
 google_place_id_extraction_regex = /- (.+)/
 
-# Easier to us the gem for getting most details
-google_places_gem_client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API'])
-
-# Open AI prompt for matching categories
-open_ai_user_message = 'You are given two pieces of information:
-                        A single place type sent from the google places api, and the name of the place.
-                        Please use both pieces of information to output the closest matching category from this list:
-                        Culture, Food, Bars, Outdoors, Cafés, Fitness.
-                        You only ever output a single category and no other text.'
-
 user_folders.each_with_index do |user_folder, user_index|
+  puts "Processing user #{user_index + 1} of #{user_folder.size} (#{user_folder['name']})"
   place_folders = Cloudinary::Api.subfolders("development/#{user_folder['name']}", options = {})['folders']
   place_folders.each_with_index do |place_folder, place_index|
-    puts "Creating Place #{place_index + 1} of #{place_folders.size}"
+    puts "Creating Place #{place_index + 1} of #{place_folders.size} places from #{user_folder['name']}"
 
     # Get the place details from the API, using the Google Place ID extracted from the folder name
     google_place_id = place_folder['name'][google_place_id_extraction_regex, 1]
-    gem_place_details = google_places_gem_client.spot(google_place_id)
 
-    url = URI("https://maps.googleapis.com/maps/api/place/details/json?fields=editorial_summary%2Cwebsite%2Copening_hours&place_id=#{google_place_id}&key=#{ENV['GOOGLE_PLACES_API']}")
-
-    # Details not returned by the gem
-    direct_api_place_details = JSON.parse(Net::HTTP.get(url))['result']
-
-    response = open_ai_client.chat(
-      parameters: {
-        model: 'gpt-4',
-        messages: [{ role: 'user', content: open_ai_user_message +
-                                            "Google Place type: #{gem_place_details.types[0]}" +
-                                            "Place name: #{gem_place_details.name}"}],
-        temperature: 1
-      }
-    )
-
-    place = Place.create(
-      name: gem_place_details.name,
-      description: direct_api_place_details['editorial_summary'] ? direct_api_place_details['editorial_summary']['overview'] : nil,
-      address: gem_place_details.formatted_address,
-      url: direct_api_place_details['website'],
-      latitude: gem_place_details.lat,
-      longitude: gem_place_details.lng,
-      # Need a separate API call to get the place photo
-      image_url: gem_place_details.photos[0].fetch_url(800),
-      category: response.dig("choices", 0, "message", "content"),
-      opening_hours: concatenate_opening_hours(direct_api_place_details['opening_hours']),
-      google_place_id: google_place_id
-    )
+    place = create_place_helper(google_place_id)
 
     add_posts(place, "development/#{user_folder['name']}/#{place_folder['name']}", users)
   end
