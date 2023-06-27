@@ -1,4 +1,3 @@
-
 <h1 class="favourite-header">Favourites</h1>
 <ul>
   <% current_user.favourites.each do |favourite| %>
@@ -8,7 +7,7 @@
       </div>
       <div class="item-details">
         <div class="item-name">
-          <%= place.name %>
+          <%= link_to place.name, place_path(place) %>
           <span class="favourite-icon"><i class="fas fa-heart"></i></span>
         </div>
         <div class="item-description">
