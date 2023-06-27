@@ -9,7 +9,6 @@ html, body {
 
 .places-list {
   width: 100%;
-  scroll-snap-type: y mandatory;
 
 }
 
