@@ -1,11 +1,11 @@
-<h1>Favourites</h1>
+
+<h1 class="favourite-header">Favourites</h1>
 <ul>
   <% current_user.favourites.each do |favourite| %>
     <% place = favourite.place %>
     <li class="favourite-item">
-     <div class="image-container">
-  <%= image_tag(place.image_url) %>
-    </div>
+      <div class="image-container" style="background-image: url('<%= place.image_url %>');">
+      </div>
       <div class="item-details">
         <div class="item-name">
           <%= place.name %>
@@ -13,7 +13,6 @@
         </div>
         <div class="item-description">
           <%= place.description %>
-          <span class="reshare-icon"><i class="fas fa-share"></i></span>
         </div>
       </div>
     </li>
