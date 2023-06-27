@@ -1,5 +1,7 @@
 .category-bar {
   width: 100vw;
+  height: 100px;
+  scroll-margin-top: 80px; /* Adjust this value as needed */
 }
 
 .category-text {
@@ -16,6 +18,9 @@
   margin: 0;
   padding: 0;
   overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-padding-top: 80px; /* Adjust this value to match scroll-margin-top */
+  scroll-snap-align: start;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
