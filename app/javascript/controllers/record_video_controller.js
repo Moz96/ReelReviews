@@ -63,7 +63,7 @@ export default class extends Controller {
   }
 
   enableForm () {
-    this.formTarget.style.display = 'block';
+    this.formTarget.style.opacity = '1';
     this.submit_button = document.getElementById('submit_button');
   }
 

@@ -1,0 +1,70 @@
+#form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* this will position the form at the bottom */
+
+}
+
+#form {
+  background-color: #0D003F;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 100%;
+  opacity: 0;
+  height: 100vh;
+  padding-top: 30rem;
+  transition: opacity 0.1s ease-in;
+}
+
+#form label {
+  padding-right: 0.5rem;
+  color: #fff;
+}
+
+#form #submit_button {
+  width: 100%;
+  height: 2rem;
+  margin-top: 2rem;
+  background-color: #4D2A6A;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#form .form-inputs {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+}
+
+#new-post-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.star-rating {
+  width: 100%;
+  direction: rtl;
+  display: flex;
+  justify-content: space-around;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  font-size: 1.5rem;
+  color: #ccc;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover ~ input:not(:checked) {
+  color: #ffc700;
+  text-shadow: 0 0 5px #ffc700, 0 0 10px #ffc700, 0 0 15px #ffc700, 0 0 20px #ffc700;
+  transform: scale(1.1);
+}
