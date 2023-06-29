@@ -1,39 +1,48 @@
-<video id ="post_<%= post.id %>_video" class="video cld-video-player"></video>
+<video id ="post_<%= post.id %>_video" class="video cld-video-player">
+</video>
 
 <style>
-
   .cld-video-player .vjs-control-bar {
-    z-index: 6;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
   /* Add padding to progress control */
   .cld-video-player .vjs-control-bar .vjs-progress-control {
     padding-left: 3rem;
     padding-right: 3rem;
+    bottom: 2rem;
   }
 
   .cld-video-player .vjs-control-bar {
     background-color: transparent;
+    z-index: 6;
+    opacity: 0.5 !important;
   }
 
   .vjs-user-inactive .vjs-control-bar {
     display: flex !important;
     visibility: visible !important;
-    opacity: 1 !important;
+    opacity: 0.5 !important;
   }
+
+  .cld-video-player .vjs-control-bar .vjs-volume-panel {
+  display: none !important;
+}
 
 </style>
 
 <script>
  var cloudinary_video_player = cloudinary.videoPlayer("post_<%= post.id %>_video",{
     cloud_name: 'dfmuyxggs',
+    bigPlayButton: false,
     fluid: false,
     muted: true,
     showLogo: false,
     controls: true,
     controlBar: {
       playToggle: false,
-      volumeMenuButton: true,
+      volumeMenuButton: false,
       fullscreenToggle: false,
       currentTimeDisplay: false,
       timeDivider: false,
@@ -41,7 +50,7 @@
       remainingTimeDisplay: false,
       progressControl: true,
       children: {
-        volumePanel: true
+        volumePanel: false
       }
     },
     hideContextMenu: true,
@@ -58,5 +67,4 @@
 
   // Crop video to fill screen (well, the place container)
   cloudinary_video_player.source("<%= post.video_public_id %>", { transformation: { width: document.querySelector('.place').clientWidth, height: document.querySelector('.place').clientHeight, crop: 'fill' }});
-
 </script>
