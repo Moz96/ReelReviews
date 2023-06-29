@@ -16,7 +16,7 @@
 
   .cld-video-player .vjs-control-bar {
     background-color: transparent;
-    z-index: 6;
+    z-index: 6 !important;
     opacity: 0.5 !important;
   }
 
@@ -40,19 +40,19 @@
     muted: true,
     showLogo: false,
     controls: true,
-    controlBar: {
-      playToggle: false,
-      volumeMenuButton: false,
-      fullscreenToggle: false,
-      currentTimeDisplay: false,
-      timeDivider: false,
-      durationDisplay: false,
-      remainingTimeDisplay: false,
-      progressControl: true,
-      children: {
-        volumePanel: false
-      }
-    },
+    // controlBar: {
+    //   playToggle: false,
+    //   volumeMenuButton: false,
+    //   fullscreenToggle: false,
+    //   currentTimeDisplay: false,
+    //   timeDivider: false,
+    //   durationDisplay: false,
+    //   remainingTimeDisplay: false,
+    //   progressControl: true,
+    //   children: {
+    //     volumePanel: false
+    //   }
+    // },
     hideContextMenu: true,
     autoplay: true,
     loop: true,
