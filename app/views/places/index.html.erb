@@ -25,9 +25,6 @@
            <div class="content-info-text">
               <h3 class="place-name"><%= link_to place.name, place_path(place) %></h3>
                 <% place.posts.order('created_at DESC')[0..4].each do |post| %>
-                <%# <img src="" alt="" class="avatar"> %>
-                <p class="post-username"> <%= post.user.username %> </p>
-                <p class="post-caption"></p>
               <%end%>
             </div>
           </div>
