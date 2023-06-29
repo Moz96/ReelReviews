@@ -10,9 +10,10 @@
   border-radius: 10px;
   padding: 2rem;
   width: 100%;
-  display: none; /* hidden by default, use JavaScript to show */
+  opacity: 0;
   height: 100vh;
   padding-top: 30rem;
+  transition: opacity 0.1s ease-in;
 }
 
 #form label {
