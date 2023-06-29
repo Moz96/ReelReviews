@@ -16,7 +16,7 @@
   <a class="nav-item <%= 'active' if current_page?(favourites_path) %>" href="/favourites">
     <i class="fas fa-heart"></i>
   </a>
- <a class="nav-item <%= 'active' if current_page?(new_post_path) %>" style= "<%='display: none;' if current_page?(new_post_path) %>" href="/posts/new">
+ <a class="nav-item <%= 'active' if current_page?(new_post_path) %>" style="<%='opacity: 0;' if current_page?(new_post_path) %>" href="/posts/new">
     <i class="fas fa-plus"></i>
   </a>
   <a class="nav-item <%= 'active' if current_page?(map_path) %>" href="/map">
