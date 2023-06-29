@@ -1,7 +1,13 @@
+ <p class="post-username"> <%= post.user.username %> </p>
 <video id ="post_<%= post.id %>_video" class="video cld-video-player">
 </video>
 
 <style>
+  .post-username{
+    position: absolute;
+    bottom: 3.5rem;
+    z-index: 9999;
+  }
   .cld-video-player .vjs-control-bar {
     margin-bottom: 0;
     padding-bottom: 0;
