@@ -104,7 +104,7 @@ export default class extends Controller {
   updateCameraMode() {
     const cameraMode = this.constructor.isFrontFacing ? 'user' : 'environment';
     console.log("Camera mode switched to: " + cameraMode);
-    this.stream.getVideoTracks()[0].stop();
+
     navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: {
@@ -113,9 +113,15 @@ export default class extends Controller {
       }
     })
       .then((stream) => {
-        this.stream = stream;
-        const videoTracks = stream.getVideoTracks();
-        this.videoElementTarget.srcObject = new MediaStream([videoTracks[0], this.stream.getAudioTracks()[0]]);
+        this.stream.getVideoTracks()[0].stop(); // Stop the previous video track
+        const videoTrack = stream.getVideoTracks()[0];
+        const audioTrack = this.stream.getAudioTracks()[0];
+
+        // Create a new MediaStream with the updated video track and existing audio track
+        const newStream = new MediaStream([videoTrack, audioTrack]);
+        this.stream = newStream;
+
+        this.videoElementTarget.srcObject = this.stream;
       })
       .catch((error) => {
         console.error("Error switching camera:", error);
