@@ -21,69 +21,69 @@ export default class extends Controller {
       this.stop();
     } else {
       this.start();
-      }
     }
+  }
 
-    start() {
-      let cameraMode = this.isFrontFacing ? 'user' : 'environment';
-      console.log("Start called with camera mode: " + cameraMode);
-      if (this.isRecording) {
-        // Already recording, switch the camera mode and update the video track
-        return navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: {
-              exact: cameraMode
-            }
+  start() {
+    let cameraMode = this.isFrontFacing ? 'user' : 'environment';
+    console.log("Start called with camera mode: " + cameraMode);
+    if (this.isRecording) {
+      // Already recording, switch the camera mode and update the video track
+      return navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: {
+            exact: cameraMode
           }
+        }
+      })
+        .then((stream) => {
+          const oldTracks = this.stream.getVideoTracks();
+          const newTracks = stream.getVideoTracks();
+          this.stream.removeTrack(oldTracks[0]);
+          this.stream.addTrack(newTracks[0]);
+          this.videoElementTarget.srcObject = this.stream;
         })
-          .then((stream) => {
-            const oldTracks = this.stream.getVideoTracks();
-            const newTracks = stream.getVideoTracks();
-            this.stream.removeTrack(oldTracks[0]);
-            this.stream.addTrack(newTracks[0]);
-            this.videoElementTarget.srcObject = this.stream;
-          })
-          .catch((error) => {
-            console.error("Error switching camera:", error);
-          });
-      } else {
-        // Start a new recording with the specified camera mode
-        return navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: {
-              exact: cameraMode
+        .catch((error) => {
+          console.error("Error switching camera:", error);
+        });
+    } else {
+      // Start a new recording with the specified camera mode
+      return navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: {
+            exact: cameraMode
+          }
+        },
+        audio: true
+      })
+        .then((stream) => {
+          this.stream = stream;
+          this.videoElementTarget.srcObject = stream;
+          this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
+          return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
+        })
+        .then(() => {
+          this.isRecording = true;
+          this.recorder = this.startRecording(this.videoElementTarget.captureStream());
+          this.recorder.onstop = () => {
+            let recordedChunks = this.recorder.recordedChunks;
+            let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+
+            if (recordedBlob.size === 0) {
+              console.error("Recorded Blob is empty. Recording failed.");
+              return;
             }
-          },
-          audio: true
+            this.enableForm();
+            this.uploadToCloudinary(recordedBlob);
+          };
         })
-          .then((stream) => {
-            this.stream = stream;
-            this.videoElementTarget.srcObject = stream;
-            this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
-            return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
-          })
-          .then(() => {
-            this.isRecording = true;
-            this.recorder = this.startRecording(this.videoElementTarget.captureStream());
-            this.recorder.onstop = () => {
-              let recordedChunks = this.recorder.recordedChunks;
-              let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
-
-              if (recordedBlob.size === 0) {
-                console.error("Recorded Blob is empty. Recording failed.");
-                return;
-              }
-              this.enableForm();
-              this.uploadToCloudinary(recordedBlob);
-            };
-          })
-          .catch((error) => {
-            console.error("Error starting recording:", error);
-          });
-      }
+        .catch((error) => {
+          console.error("Error starting recording:", error);
+        });
     }
+  }
 
-  enableForm () {
+  enableForm() {
     this.formTarget.style.display = 'block';
     this.submit_button = document.getElementById('submit_button');
   }
@@ -92,25 +92,34 @@ export default class extends Controller {
     this.recorder.stop();
     this.stream.getTracks().forEach((track) => track.stop());
     this.isRecording = false;
-  };
+  }
 
   toggleFlag() {
-    console.log("isFrontFacing before toggle: " + this.isFrontFacing);
-    this.isFrontFacing = !this.isFrontFacing;
-    console.log("isFrontFacing after toggle: " + this.isFrontFacing);
+    console.log("isFrontFacing before toggle: " + this.constructor.isFrontFacing);
+    this.constructor.isFrontFacing = !this.constructor.isFrontFacing;
+    console.log("isFrontFacing after toggle: " + this.constructor.isFrontFacing);
+    this.updateCameraMode();
+  }
 
-    // Check if recording is active
-    if (this.isRecording) {
-      // Stop the current recording
-      this.stop();
-
-      // Start a new recording with the updated camera setting
-      this.start();
-    } else {
-      // If recording is not active, just update the camera setting
-      // without starting a new recording
-      this.start();
-    }
+  updateCameraMode() {
+    const cameraMode = this.constructor.isFrontFacing ? 'user' : 'environment';
+    console.log("Camera mode switched to: " + cameraMode);
+    this.stream.getVideoTracks()[0].stop();
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: {
+          exact: cameraMode
+        }
+      }
+    })
+      .then((stream) => {
+        this.stream = stream;
+        const videoTracks = stream.getVideoTracks();
+        this.videoElementTarget.srcObject = new MediaStream([videoTracks[0], this.stream.getAudioTracks()[0]]);
+      })
+      .catch((error) => {
+        console.error("Error switching camera:", error);
+      });
   }
 
   startRecording(stream) {
@@ -147,8 +156,8 @@ export default class extends Controller {
   }
 
   savePost() {
-  const formData = new FormData(this.form);
-   console.log(formData)
+    const formData = new FormData(this.form);
+    console.log(formData);
     Rails.ajax({
       url: '/posts',
       type: "post",
