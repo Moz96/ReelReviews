@@ -77,7 +77,19 @@ export default class extends Controller {
     console.log("isFrontFacing before toggle: " + this.isFrontFacing);
     this.isFrontFacing = !this.isFrontFacing;
     console.log("isFrontFacing after toggle: " + this.isFrontFacing);
-    this.start();
+
+    // Check if recording is active
+    if (this.isRecording) {
+      // Stop the current recording
+      this.stop();
+
+      // Start a new recording with the updated camera setting
+      this.start();
+    } else {
+      // If recording is not active, just update the camera setting
+      // without starting a new recording
+      this.start();
+    }
   }
 
   startRecording(stream) {
