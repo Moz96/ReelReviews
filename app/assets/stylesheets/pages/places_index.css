@@ -82,3 +82,9 @@ a {
 .next {
   right: 1rem;
 }
+
+.favourite-icon {
+  margin-left: 5px;
+  position: relative;
+  left: 7px;
+}

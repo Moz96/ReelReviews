@@ -1,14 +1,24 @@
-<h1 class="favourite-header">Favourites</h1>
+<h1 class="favourite-header" data-controller='favourites'>Favourites</h1>
 <ul>
   <% current_user.favourites.each do |favourite| %>
     <% place = favourite.place %>
-    <li class="favourite-item">
+    <li class="favourite-item" data-favourites-target="card">
       <div class="image-container" style="background-image: url('<%= place.image_url %>');">
       </div>
       <div class="item-details">
         <div class="item-name">
           <%= link_to place.name, place_path(place) %>
-          <span class="favourite-icon"><i class="fas fa-heart"></i></span>
+          <span class="favourite-icon ">
+            <%# <% if current_user.favourites.exists?(place_id: place.id) %> 
+              <%# <%= link_to "", favourite_path(favourite), method: :delete, data: { turbo: true, turbo_method: :post}, class: "fas fa-heart active" %> <%#  %> 
+            <%# <% else %>
+              <%# <%= link_to "Unfavourite", favourite_path(place.place.id), data: { turbo: true, turbo_method: :post }, class: "favourite" %> 
+              <%= link_to favourite_path(favourite.id),  data: { turbo: true, turbo_method: :delete } do%>
+                    <i class="fas fa-heart"></i>
+                  <% end %>
+               <%# <%= link_to "Unfavourite", favourite_path(favourite.id), data: { turbo: true, turbo_method: :delete, action: 'click->favourites#toggle'}, class: "favourite toggle-show" %> 
+            <%# <% end %> 
+          </span>
         </div>
         <div class="item-description">
           <%= place.description %>

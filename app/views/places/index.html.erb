@@ -16,10 +16,14 @@
           <a href="" class="prev" data-action="click->place#prev:prevent"><</a>
           <a href="" class="next" data-action="click->place#next:prevent">></a>
           <% if current_user && !current_user.favourites.exists?(place_id: place.id) %>
-            <%= link_to "Favourite", favourites_path(place_id: place.id), data: { turbo: true, turbo_method: :post }, class: "favourite" %>
-          <% else %>
-            <%= link_to "Unfavourite", favourites_path(place_id: place.id), data: { turbo: true, turbo_method: :post}, class: "favourite" %>
-          <% end %>
+  <%= link_to favourites_path(place_id: place.id), data: { turbo: true, turbo_method: :post } do %>
+    <i class="far fa-heart favourite-icon"></i>
+  <% end %>
+<% else %>
+  <%= link_to favourites_path(place_id: place.id), data: { turbo: true, turbo_method: :post } do %>
+    <i class="fas fa-heart favourite-icon"></i>
+  <% end %>
+<% end %>
 
           <div class="content-info-background">
            <div class="content-info-text">
