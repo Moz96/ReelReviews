@@ -52,16 +52,6 @@ ul {
 
 .favourite-icon {
   margin-left: 5px;
-}
-
-.reshare-icon {
-  margin-top: 5px;
-  text-align: right;
-}
-
-.favourite-icon i,
-.reshare-icon i {
-  color: #888888;
-  background-color: transparent;
-  fill: none;
+  color: white;
+  background-color:transparent;
 }

@@ -13,5 +13,8 @@ application.register("map", MapController)
 import PlaceController from "./place_controller"
 application.register("place", PlaceController)
 
+import FavouritesController from "./favourites_controller"
+application.register("favourites",FavouritesController)
+
 import RecordVideoController from "./record_video_controller"
 application.register("record-video", RecordVideoController)

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :favourites, only: [:index, :create, :destroy]
 
+
   get 'map', action: :map, controller: 'places'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
