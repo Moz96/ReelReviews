@@ -34,6 +34,7 @@
 .location p {
   font-size: 16px;
   margin-bottom: 5px;
+  line-height: 1.4;
 }
 
 #map-container {
