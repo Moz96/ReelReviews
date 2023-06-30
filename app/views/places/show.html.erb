@@ -10,17 +10,15 @@
     </div>
     <div class="opening-times">
       <h2>Opening times</h2>
-      <p>Opening Times: <%= @place.opening_hours %></p>
+      <p><%= simple_format(@place.opening_hours) %></p>
     </div>
     <div class="location">
       <h2>Location</h2>
       <p>Location: <%= @place.address %></p>
     </div>
   </div>
-  
-  <div 
+
+  <div
   data-map-markers-value="<%= @markers.to_json %>"
   id="map-container" data-controller="map" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
 </div>
-
-
