@@ -1,19 +1,16 @@
 #form-container {
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* this will position the form at the bottom */
-
-}
-
-#form {
-  background-color: #0D003F;
-  border-radius: 10px;
-  padding: 2rem;
-  width: 100%;
-  opacity: 0;
+  align-items: center;
   height: 100vh;
-  padding-top: 30rem;
+  background-color: #0D003F;
+  z-index: 3;
+  opacity: 0;
   transition: opacity 0.1s ease-in;
+}
+#form {
+  width: 100%;
+  z-index: 3;
 }
 
 #form label {
@@ -36,12 +33,13 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 #new-post-container {
-  position: relative;
-  width: 100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
   height: 100vh;
 }
 

@@ -1,8 +1,8 @@
 <div id="new-post-container" data-controller="record-video">
 
   <%= render partial: "new_video" %>
-<div id="form-container">
-  <%= form_with(model: @post, local: true, id: 'form', data: { target: 'record-video.form', action: 'submit->record-video#savePost' }) do |f| %>
+<div id="form-container" data-target="record-video.form">
+  <%= form_with(model: @post, local: true, id: 'form', data: { action: 'submit->record-video#savePost' }) do |f| %>
     <div class="form-inputs">
      <%= f.label :place_rating %>
       <div class="star-rating">
@@ -22,16 +22,13 @@
         <label for="star5" class="fas fa-star"></label>
       </div>
 
-
       <%= f.label "Search for a place" %>
       <%= text_field_tag "google_place_search", '', id: "autocomplete", required: true %>
-
-    </div>
       <%= f.submit "Uploading...", id: 'submit_button', disabled: true %>
+    </div>
 
     <ul id="results"></ul>
     <%# Show uploading text while response is being processed %>
-
 
     <%= f.hidden_field :video_url, id: 'hidden_video_url' %>
     <%= f.hidden_field :video_public_id, id: 'hidden_video_public_id' %>
