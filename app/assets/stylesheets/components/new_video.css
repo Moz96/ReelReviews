@@ -58,3 +58,7 @@ cursor: pointer;
 #switch-camera-button button i {
 color: white;
 }
+
+.flipped {
+  transform: scaleX(-1);
+}

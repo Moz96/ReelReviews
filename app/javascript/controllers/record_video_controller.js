@@ -6,23 +6,31 @@ export default class extends Controller {
 
   static isFrontFacing = true;
   static form = document.getElementById('form');
-  // static recordingTimeMS = 5000;
 
   isRecording = false;
+  recorder = null;
+  stream = null;
 
   connect() {
     console.log('Record Video controller connected');
-    // this.constructor.form = document.getElementById('form');
-    // this.constructor.form.addEventListener("submit", this.handleFormSubmission.bind(this));
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(() => {
+        console.log('Camera access permission granted');
+        this.start();
+      })
+      .catch((error) => {
+        console.error('Error accessing camera:', error);
+      });
   }
 
   toggleRecording() {
     if (this.isRecording) {
       this.stop();
     } else {
-      this.start();
-      }
+      this.startRecording();
     }
+  }
 
   start() {
     let cameraMode = this.isFrontFacing ? 'environment' : 'user';
@@ -30,57 +38,36 @@ export default class extends Controller {
     return navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: {
-          // Using ideal instead of exact so we can test on devices other than mobile
           ideal: cameraMode
         }
       },
       audio: true
     })
-    .then((stream) => {
-      this.stream = stream;
-      this.videoElementTarget.srcObject = stream;
-      this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
-      return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
-    })
-    .then(() => {
-      this.isRecording = true;
-      this.recorder = this.startRecording(this.videoElementTarget.captureStream());
-      this.recorder.onstop = () => {
-        let recordedChunks = this.recorder.recordedChunks;
-        let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
-
-        if (recordedBlob.size === 0) {
-          console.error("Recorded Blob is empty. Recording failed.");
-          return;
-        }
-        this.enableForm();
-        this.uploadToCloudinary(recordedBlob);
-      };
-    })
-    .catch((error) => {
-      console.error("Error starting recording:", error);
-    });
-  }
-
-  enableForm () {
-    this.formTarget.style.opacity = '1';
-    this.submit_button = document.getElementById('submit_button');
+      .then((stream) => {
+        this.stream = stream;
+        this.videoElementTarget.srcObject = stream;
+        this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
+        return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
+      })
+      .catch((error) => {
+        console.error("Error starting camera:", error);
+      });
   }
 
   stop() {
     this.recorder.stop();
     this.stream.getTracks().forEach((track) => track.stop());
     this.isRecording = false;
-  };
-
-  toggleFlag() {
-    console.log("isFrontFacing before toggle: " + this.isFrontFacing);
-    this.isFrontFacing = !this.isFrontFacing;
-    console.log("isFrontFacing after toggle: " + this.isFrontFacing);
-    this.start();
+    this.recorder = null;
+    this.stream = null;
   }
 
-  startRecording(stream) {
+  startRecording() {
+    this.isRecording = true;
+    this.recorder = this.startMediaRecorder(this.stream);
+  }
+
+  startMediaRecorder(stream) {
     const recorder = new MediaRecorder(stream);
     let data = [];
 
@@ -88,7 +75,24 @@ export default class extends Controller {
     recorder.start();
     recorder.recordedChunks = data;
 
+    recorder.onstop = () => {
+      let recordedChunks = recorder.recordedChunks;
+      let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+
+      if (recordedBlob.size === 0) {
+        console.error("Recorded Blob is empty. Recording failed.");
+        return;
+      }
+      this.enableForm();
+      this.uploadToCloudinary(recordedBlob);
+    };
+
     return recorder;
+  }
+
+  enableForm() {
+    this.formTarget.style.opacity = '1';
+    this.submit_button = document.getElementById('submit_button');
   }
 
   uploadToCloudinary(videoBlob) {
@@ -114,8 +118,8 @@ export default class extends Controller {
   }
 
   savePost() {
-  const formData = new FormData(this.form);
-   console.log(formData)
+    const formData = new FormData(this.form);
+    console.log(formData);
     Rails.ajax({
       url: '/posts',
       type: "post",
