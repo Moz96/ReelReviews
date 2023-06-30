@@ -12,6 +12,15 @@ export default class extends Controller {
 
   connect() {
     console.log('Record Video controller connected');
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(() => {
+      console.log('Camera access permission granted');
+      this.start();
+    })
+    .catch((error) => {
+      console.error('Error accessing camera:', error);
+    });
     // this.constructor.form = document.getElementById('form');
     // this.constructor.form.addEventListener("submit", this.handleFormSubmission.bind(this));
   }
