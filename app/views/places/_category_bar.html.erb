@@ -10,7 +10,7 @@
         <% else %>
           <%= link_to places_path(category: category), class: "category-link" do %>
             <%= image_tag "icons/categories/#{category}.svg", alt: "#{category} icon", class: "icon-category" %>
-            <p class="category-text"><%= category %></p>
+            <p class="category-text" style="width: 60px"><%= category %></p>
           <% end %>
         <% end %>
       </li>
