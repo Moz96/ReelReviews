@@ -33,43 +33,28 @@ export default class extends Controller {
       }
     }
 
-  start() {
-    let cameraMode = this.isFrontFacing ? 'environment' : 'user';
-    console.log("Start called with camera mode: " + cameraMode);
-    return navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: {
-          // Using ideal instead of exact so we can test on devices other than mobile
-          ideal: cameraMode
-        }
-      },
-      audio: true
-    })
-    .then((stream) => {
-      this.stream = stream;
-      this.videoElementTarget.srcObject = stream;
-      this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
-      return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
-    })
-    .then(() => {
-      this.isRecording = true;
-      this.recorder = this.startRecording(this.videoElementTarget.captureStream());
-      this.recorder.onstop = () => {
-        let recordedChunks = this.recorder.recordedChunks;
-        let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
-
-        if (recordedBlob.size === 0) {
-          console.error("Recorded Blob is empty. Recording failed.");
-          return;
-        }
-        this.enableForm();
-        this.uploadToCloudinary(recordedBlob);
-      };
-    })
-    .catch((error) => {
-      console.error("Error starting recording:", error);
-    });
-  }
+    start() {
+      let cameraMode = this.isFrontFacing ? 'environment' : 'user';
+      console.log("Start called with camera mode: " + cameraMode);
+      return navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: {
+            // Using ideal instead of exact so we can test on devices other than mobile
+            ideal: cameraMode
+          }
+        },
+        audio: true
+      })
+        .then((stream) => {
+          this.stream = stream;
+          this.videoElementTarget.srcObject = stream;
+          this.videoElementTarget.captureStream = this.videoElementTarget.captureStream || this.videoElementTarget.mozCaptureStream;
+          return new Promise((resolve) => (this.videoElementTarget.onplaying = resolve));
+        })
+        .catch((error) => {
+          console.error("Error starting camera:", error);
+        });
+    }
 
   enableForm () {
     this.formTarget.style.opacity = '1';
