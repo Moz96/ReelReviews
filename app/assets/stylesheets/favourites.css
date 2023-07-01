@@ -10,6 +10,12 @@ ul {
   padding-inline-start: 10px;
 }
 
+#title-and-heart-container {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  align-items: start;
+}
+
 .favourite-item {
   display: flex;
   padding: 1rem 0.5rem;
@@ -36,22 +42,15 @@ ul {
 .item-description {
   align-self: left;
   padding-top: 10px;
-}
-
-.item-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  text-wrap: balance;
 }
 
 .item-name {
   font-weight: bold;
   font-size: 20px;
-  align-self: flex-start;
+  margin-top: -2px;
 }
 
 .favourite-icon {
-  margin-left: 5px;
   color: white;
-  background-color:transparent;
 }
