@@ -6,7 +6,7 @@ def ai_select_category(google_place_type, place_name)
   open_ai_user_message =  'You are given two pieces of information: ' +
                           'A single place type sent from the google places api, and the name of the place. ' +
                           'Please use both pieces of information to output the closest matching category from this list: ' +
-                          'Culture, Food, Bars, Outdoors, Cafés, Fitness.' +
+                          'Culture, Bars, Outdoors, Cafés, Fitness.' +
                           'You only ever output a single category and no other text.'
 
   open_ai_response = open_ai_client.chat(
