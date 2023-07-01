@@ -21,7 +21,7 @@ def create_place_helper(google_place_id)
   def create_place(place_details, google_place_id, place_image_url)
     Place.create(
     name: place_details['name'],
-    description: place_details['editorial_summary'] ? place_details['editorial_summary']['overview'] : 'No description available.',
+    description: place_details['editorial_summary'] ? place_details['editorial_summary']['overview'] : nil,
     address: place_details['formatted_address'],
     url: place_details['website'],
     latitude: place_details["geometry"]["location"]["lat"],
