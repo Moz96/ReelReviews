@@ -12,7 +12,7 @@ ul {
 
 .favourite-item {
   display: flex;
-  margin-bottom: 10px;
+  padding: 1rem 0.5rem;
 }
 
 .image-container {
