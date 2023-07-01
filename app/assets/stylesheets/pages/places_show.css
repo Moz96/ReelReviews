@@ -1,25 +1,47 @@
-.main-container {
-  align-self: center;
+.image-and-name{
+  position: relative;
 }
 
-/* .main-image {
-  width: 100%;
-} */
-.main-image img {
+.image-and-name img {
+  z-index: -1;
   min-width: 100vw;
-  height: 300px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.place-name {
+  padding: 0 1rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.place-name h1 {
+  font-size: 24px;
+}
+
+.category-icon-and-text {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.category-icon-and-text img {
+  width: 1.75rem;
+}
+
+.category-icon-and-text p {
+  padding: 0.2rem 0.3rem;
+  border-radius: 1rem;
 }
 
 .details {
-  padding: 1rem;
+  /* padding-top: 10rem; */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0;
 }
 
-.name-description h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.name-description p {
+.description-and-category p {
   font-size: 16px;
   margin-bottom: 5px;
 }

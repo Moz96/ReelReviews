@@ -1,11 +1,33 @@
 <div class="main-container">
-  <div class="main-image">
+  <div class="image-and-name">
     <%= image_tag(@place.image_url) %>
-  </div>
-  <div class="details">
-    <div class="name-description">
+    <div class="place-name">
       <h1><%= @place.name %></h1>
-      <p>Category: <%= @place.category %></p>
+    </div>
+  </div>
+
+  <div class="details">
+    <div class="description-and-category">
+    <div class="category-icon-and-text">
+      <%= image_tag "icons/categories/#{@place.category}.svg", alt: "#{@place.category} icon", class: "icon-category" %>
+      <p style="background-color: <%=
+      case @place.category
+        when 'Culture'
+         'blue'
+        when 'Restaurants'
+         'lightblue'
+        when 'Bars'
+        'olive'
+        when 'Outdoors'
+        'green'
+        when 'Cafés'
+        'yellow'
+        when 'Fitness'
+        'pink'
+      end
+      %>;">
+      <%= @place.category %></p>
+    </div>
       <p><%= @place.description %></p>
     </div>
     <div class="opening-times">
