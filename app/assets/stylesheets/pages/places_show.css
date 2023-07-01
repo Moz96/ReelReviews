@@ -9,16 +9,16 @@
   object-fit: cover;
 }
 
-.place-name {
-  padding: 0 1rem;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
+  .place-detail-name {
+    padding: 0 1rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
 
-.place-name h1 {
-  font-size: 24px;
-}
+  .place-detail-name h1 {
+    font-size: 24px;
+  }
 
 .category-icon-and-text {
   display: flex;
