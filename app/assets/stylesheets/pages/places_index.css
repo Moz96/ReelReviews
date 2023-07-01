@@ -51,7 +51,6 @@ a {
 .video {
   height: calc(100dvh - 39px);
   width: 100vw;
-  ;
 }
 
 .post.active {
