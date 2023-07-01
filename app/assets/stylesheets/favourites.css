@@ -10,6 +10,20 @@ ul {
   padding-inline-start: 10px;
 }
 
+.header-background {
+  height: 3rem;
+  width: 65%;
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, hsla(55, 96%, 69%, 1) 0%, hsla(41, 97%, 64%, 1) 0%, hsla(41, 97%, 64%, 1) 16%, hsla(343, 88%, 63%, 1) 16%, hsla(343, 88%, 63%, 1) 41%, hsla(220, 81%, 64%, 1) 41%, hsla(220, 81%, 64%, 1) 60%, hsla(177, 57%, 62%, 1) 60%, hsla(177, 57%, 62%, 1) 81%);
+  filter: brightness(0.9);
+  border-radius: 0 1rem 1rem 0;
+}
+
+
+
 #title-and-heart-container {
   display: grid;
   grid-template-columns: 80% 20%;
@@ -34,14 +48,19 @@ ul {
 }
 
 .item-details {
+  margin-left: 0.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1; /* Allow item details to grow and fill remaining space */
 }
 
+.item-details i {
+  margin-left: 0.5rem;
+}
+
 .item-description {
   align-self: left;
-  padding-top: 10px;
+  /* padding-top: 10px; */
   text-wrap: balance;
 }
 

@@ -1,14 +1,19 @@
-<h1 class="favourite-header" data-controller='favourites'>Your Favourites</h1>
+<div class="favourite-header" data-controller='favourites'>
+  <h1>Your Favourites</h1>
+  <div class="header-background"></div>
+</div>
+
 <ul>
   <% current_user.favourites.each do |favourite| %>
     <% place = favourite.place %>
     <li class="favourite-item" data-favourites-target="card">
+    <a href="<%= place_path(place) %>" >
       <div class="image-container" style="background-image: url('<%= place.image_url %>');">
       </div>
       <div class="item-details">
         <div id="title-and-heart-container">
           <div class="item-name">
-            <%= link_to place.name, place_path(place) %>
+            <%= place.name %>
           </div>
           <span class="favourite-icon ">
               <%# <% if current_user.favourites.exists?(place_id: place.id) %>
@@ -27,5 +32,6 @@
         </div>
       </div>
     </li>
+    </a>
   <% end %>
 </ul>
