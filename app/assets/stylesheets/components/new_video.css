@@ -8,18 +8,6 @@
   z-index: 2;
 }
 
-#invisible-block {
-  width: 7rem;
-  background-color: #0D003F;
-  height: 2rem;
-  z-index: 5;
-  position: fixed;
-  left: 0.3rem;
-  right: 0;
-  margin: 0 auto;
-  bottom: 2rem;
-}
-
 #record-video-buttons {
   text-align: center;
   position: fixed;
