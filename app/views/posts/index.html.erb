@@ -1,3 +1,8 @@
+<div class="favourite-header">
+  <h1>Your Reel Reviews</h1>
+  <div class="header-background"></div>
+</div>
+
 <div class="main-content-container">
   <div class="places-list">
     <% @posts.each do |post| %>
@@ -57,6 +62,21 @@ html, body {
   margin: 0;
 }
 
+.favourite-header {
+  padding-top: 0.3rem;
+  padding-right: 0.8rem;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+.header-background  {
+  width: 100%;
+  top: 1.4rem;
+  right: 0;
+  left: auto;
+  transform: rotate(180deg);
+}
+
 .main-content-container{
   width: 100vw;
   background: rgb(226, 226, 226);
@@ -91,50 +111,11 @@ html, body {
 .content-info-text {
   margin-left: 1rem;
   padding-bottom: 4rem;
+  text-align: left;
 }
 
 .content-info-background {
   z-index: 2;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
-}
-
-a {
-  text-decoration: none;
-  color: white;
-}
-
-.video {
-  height: calc(100dvh - 39px);
-  width: 100vw;
-}
-
-.post.active {
-  display: block;
-}
-
-.post {
-  display: none;
-  text-align: center;
-}
-
-.prev, .next {
-  position: absolute;
-  bottom: 50dvh;
-  font-size: 3rem;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.prev {
-  left: 1rem;
-}
-
-.next {
-  right: 1rem;
-}
-
-.favourite-icon {
-  margin-left: 5px;
-  position: relative;
-  left: 7px;
 }
 </style>
